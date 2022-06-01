@@ -31,6 +31,16 @@ export default class lista extends Component {
     console.log(this.state.likes)
   }
 
+  async componentDidUpdate() {
+    console.log('updated')
+
+    const responseJson = await getFeed()
+    console.log(responseJson);
+    this.setState({ publis: responseJson.publis, likes: responseJson.likes, cargando: false, meGusta: responseJson.meGusta, users: responseJson.users })
+    console.log(this.state.publis)
+    console.log(this.state.likes)
+  }
+
   render() {
     const { cargando, publis, likes, meGusta, users } = this.state
 
