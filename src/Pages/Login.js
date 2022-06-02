@@ -1,10 +1,9 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import Cookies from 'universal-cookie';
+import {baseUrl} from '../Service/Constantes';
 
 const cookies = new Cookies();
-
-const baseUrl = "http://127.0.0.1:8000/api/login";
 
 export default class Login extends Component {
     state = {
@@ -27,7 +26,7 @@ export default class Login extends Component {
 
         await axios({
             method: 'post',
-            url: baseUrl,
+            url: baseUrl + 'login',
             data: {
                 email: this.state.form.email,
                 password: this.state.form.password
@@ -46,7 +45,7 @@ export default class Login extends Component {
                 // cookies.set('apellido_materno', respuesta.apellido_materno, {path: "/"});
                 // cookies.set('nombre', respuesta.nombre, {path: "/"});
                 // cookies.set('username', respuesta.username, {path: "/"});
-                window.location.href="./LoguedInicio";
+                window.location.href="./home";
             }else{
                 alert('El email o la contraseña no son correctos')
             }
@@ -93,7 +92,7 @@ export default class Login extends Component {
                             <div className="flex items-center justify-center border-t-[1px] border-t-slate-300 w-full relative">
                                 <div className="-mt-1 font-bod bg-white px-5 absolute">Or</div>
                             </div>
-                            <button className="w-full border-blue-900 hover:border-[#003087] hover:border-[2px] border-[1px] rounded-3xl p-3 text-[#0070ba] font-bold transition duration-200">Sign Up</button>
+                            <button className="w-full border-blue-900 hover:border-[#003087] hover:border-[2px] border-[1px] rounded-3xl p-3 text-[#0070ba] font-bold transition duration-200" onClick={() => window.location.href="./Register"}>Sign Up</button>
                         </div>
                     </div>
                 </div>

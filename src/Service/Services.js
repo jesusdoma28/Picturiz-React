@@ -1,17 +1,14 @@
 import axios from 'axios';
-import { Component } from 'react';
-import Cookies from 'universal-cookie';
-const cookies = new Cookies();
-const baseUrl = "http://127.0.0.1:8000/api/";
-const apiKey = cookies.get('token')
+import {baseUrl, apiToken} from '../Service/Constantes'
+
 
 export async function getFeed() {
   var respuesta;
   await axios({
     method: 'get',
-    url: baseUrl + 'publications',
+    url: baseUrl + 'getFeed',
     headers: {
-      'Authorization': 'Bearer ' + cookies.get('token')
+      'Authorization': 'Bearer ' + apiToken
     }
   })
     .then(response => {
@@ -42,12 +39,11 @@ export async function changeMeGusta(meGusta, publi_id) {
   else if (meGusta == true) {
     queryUrl = queryUrl + 'quitarMg';
   }
-  console.log('publi_id changeMg:' + publi_id);
   axios({
     method: 'post',
     url: queryUrl,
     headers: {
-      'Authorization': 'Bearer ' + cookies.get('token')
+      'Authorization': 'Bearer ' + apiToken
     },
     data:{
       publi_id: publi_id
@@ -70,5 +66,125 @@ export async function changeMeGusta(meGusta, publi_id) {
       //alert('El email o la contraseña no son correctos')
     });
     
+  return respuesta;
+}
+
+export async function getAvatar() {
+  var respuesta;
+  await axios({
+    method: 'get',
+    url: baseUrl + 'getImage',
+    headers: {
+      'Authorization': 'Bearer ' + apiToken
+    }
+  })
+    .then(response => {
+      return response.data;
+    })
+    .then(response => {
+      if (response != null) {
+        respuesta = response
+      } else {
+        //alert('sin datos')
+      }
+    })
+    .catch(function (error) {
+      //console.log(error);
+      //alert('El email o la contraseña no son correctos')
+    });
+  return respuesta;
+}
+
+export async function getUserAuthId() {
+  var respuesta;
+  await axios({
+    method: 'get',
+    url: baseUrl + 'getUserAuthId',
+    headers: {
+      'Authorization': 'Bearer ' + apiToken
+    }
+  })
+    .then(response => {
+      return response.data;
+    })
+    .then(response => {
+      if (response != null) {
+        respuesta = response
+      } else {
+        //alert('sin datos')
+      }
+    })
+    .catch(function (error) {
+      //console.log(error);
+      //alert('El email o la contraseña no son correctos')
+    });
+  return respuesta;
+}
+
+
+export async function DoRegister(datos) {
+  var respuesta;
+  
+  console.log(datos);
+  await axios({
+    method: 'post',
+    url: baseUrl + 'register',
+    data:{
+      email: datos.email,
+      last_name: datos.last_name,
+      name: datos.name,
+      password: datos.password,
+      username: datos.username,
+      birthday: datos.birthday
+    }
+  })
+    .then(response => {
+      return response.data;
+
+    })
+    .then(response => {
+      if (response != null) {
+        respuesta = response;
+        return response;
+      } else {
+        alert('sin datos')
+      }
+    })
+    .catch(function (error) {
+      //console.log(error);
+      //alert('El email o la contraseña no son correctos')
+    });
+    
+  return respuesta;
+}
+
+export async function getUserInfo(user_id) {
+  var respuesta;
+  await axios({
+    method: 'post',
+    url: baseUrl + 'getUserInfo',
+    headers: {
+      'Authorization': 'Bearer ' + apiToken
+    },
+    data:{
+      user_id: user_id
+    }
+  })
+    .then(response => {
+      return response.data;
+    })
+    .then(response => {
+      if (response != null) {
+        respuesta = response.user
+    /*     console.log('userInfo')
+        console.log(response.user); */
+      } else {
+        //alert('sin datos')
+      }
+    })
+    .catch(function (error) {
+      //console.log(error);
+      //alert('El email o la contraseña no son correctos')
+    });
   return respuesta;
 }

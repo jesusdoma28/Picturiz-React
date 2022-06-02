@@ -3,7 +3,8 @@ import '../App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Login from '../Pages/Login';
 import Register from '../Pages/Register';
-import LoguedInicio from '../Pages/LoguedInicio';
+import Home from '../Pages/Home';
+import Profile from '../Pages/Profile'
 
 function Rout() {
   return (
@@ -11,7 +12,8 @@ function Rout() {
         <Routes>
           <Route exact path="/" element={<Login/>}/>
           <Route exact path="/register" element={<Register/>}/>
-          <Route exact path="/LoguedInicio" element={<LoguedInicio/>}/>
+          <Route exact path="/home" element={<Home/>}/>
+          <Route exact path="/profile" element={<Profile/>}/>
           {/*<Route path="*" element={<NotFound/>}/> */}
         </Routes>
     </Router>
