@@ -55,7 +55,7 @@ function Comments(props) {
   const userComments = props.userComments;
   const mostrar = props.mostrar;
 
-  if (mostrar == true ) {
+  if (mostrar == true) {
     return (
       <>
         <hr class="mx-5" />
@@ -83,7 +83,7 @@ function ShowComments(props) {
 }
 
 function changeMostrar() {
-  
+
   if (mostrar === false) {
     mostrar = true;
   } else if (mostrar === true) {
@@ -105,12 +105,14 @@ const Publi = ({
 
   <div class="bg-gray-100 p-4 grid place-items-center">
     <div class="bg-white border rounded-sm max-w-md">
-      <div class="flex items-center px-4 py-3">
-        <img class="h-8 w-8 rounded-full" src={userAvatar} />
-        <div class="ml-3 ">
-          <span class="text-sm font-semibold antialiased block leading-tight">{user.username}</span>
+      <button onClick={() => window.location.href = './profile?user_id=' + user.id}>
+        <div class="flex items-center px-4 py-3">
+          <img class="h-8 w-8 rounded-full" src={userAvatar} />
+          <div class="ml-3 ">
+            <span class="text-sm font-semibold antialiased block leading-tight">{user.username}</span>
+          </div>
         </div>
-      </div>
+      </button>
       <img src={image} />
       <div class="flex items-center justify-between mx-4 mt-3 mb-2">
         <div class="flex gap-5">

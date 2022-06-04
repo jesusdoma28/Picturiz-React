@@ -1,32 +1,50 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PublicationPictureProfile from './PublicationPictureProfile';
+
+function ShowEditProfile(props) {
+  const userAuthId = props.userAuthId;
+  const userId = props.userId;
+  if (userAuthId == userId) {
+    return (
+      <span class="text-base font-semibold text-gray-700 mr-2">
+        <button
+          class="bg-transparent hover:bg-blue-500 text-gray-700 font-semibold hover:text-white py-2 px-4 border border-gray-600 hover:border-transparent rounded"
+          onClick={() => window.location.href = './editProfile?user_id=' + userAuthId}
+        >Edit Profile</button>
+      </span>
+    );
+  }
+}
 
 const UserInfoProfile = ({
   userAvatar,
-  user
+  user,
+  publications,
+  numPost,
+  numFollowers,
+  numFollowed,
+  userPublicationsImages,
+  userAuthId
 }) => (
   <>
-    <div class="bg-gray-100 h-auto px-48">
+    <div class="bg-gray-100 h-screen px-48">
       <div class="flex md:flex-row-reverse flex-wrap">
         <div class="w-full md:w-3/4 p-4 text-center">
           <div class="text-left pl-4 pt-3">
             <span class="text-base text-gray-700 text-2xl mr-2">{user.username}</span>
-            <span class="text-base font-semibold text-gray-700 mr-2">
-              <button
-                class="bg-transparent hover:bg-blue-500 text-gray-700 font-semibold hover:text-white py-2 px-4 border border-gray-600 hover:border-transparent rounded"
-              >Edit Profile</button>
-            </span>
+            <ShowEditProfile userAuthId={userAuthId} userId={user.id}></ShowEditProfile>
+
           </div>
 
           <div class="text-left pl-4 pt-3">
             <span class="text-base font-semibold text-gray-700 mr-2">
-              <b>220</b> posts
+              <b>{numPost}</b> posts
             </span>
             <span class="text-base font-semibold text-gray-700 mr-2">
-              <b>114</b> followers
+              <b>{numFollowers}</b> followers
             </span>
             <span class="text-base font-semibold text-gray-700">
-              <b>200</b> following
+              <b>{numFollowed}</b> following
             </span>
           </div>
 
@@ -36,11 +54,8 @@ const UserInfoProfile = ({
 
           <div class="text-left pl-4 pt-3">
             <p
-              class="text-base font-medium text-blue-700 mr-2"
-            >#graphicsdesigner #traveller #reader #blogger #digitalmarketer</p>
-            <p
               class="text-base font-medium text-gray-700 mr-2"
-            >https://www.behance.net/hiravesona7855</p>
+            >{user.info}</p>
           </div>
         </div>
 
@@ -92,7 +107,7 @@ const UserInfoProfile = ({
           </div>
         </div>
 
-        <div class="flex text-gray-700 text-center py-2 m-2 pr-5">
+        {/* <div class="flex text-gray-700 text-center py-2 m-2 pr-5">
           <div class="flex inline-flex">
             <button
               class="border-transparent text-gray-600 rounded-full hover:text-blue-600 focus:outline-none focus:text-gray-600"
@@ -166,73 +181,19 @@ const UserInfoProfile = ({
           <div class="flex inline-flex ml-2 mt-1">
             <h3 class="text-sm font-medium text-gray-700 mr-2">TAGGED</h3>
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* <!--post images--> */}
 
-      <div class="flex pt-4">
-        <div class="flex-1 text-center px-4 py-2 m-2">
-          <img
-            class="w-full"
-            src="https://images.unsplash.com/photo-1487530811176-3780de880c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80"
-          />
-        </div>
-        <div class="flex-1 text-center px-4 py-2 m-2">
-          <img
-            class="w-full"
-            src="https://images.unsplash.com/photo-1487530811176-3780de880c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80"
-          />
-        </div>
-        <div class="flex-1 text-center px-4 py-2 m-2">
-          <img
-            class="w-full"
-            src="https://images.unsplash.com/photo-1487530811176-3780de880c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80"
-          />
-        </div>
+      <div class="container mx-auto space-y-2 lg:space-y-0 lg:gap-2 lg:grid lg:grid-cols-3">
+        {
+          publications.map((publication) =>
+            <PublicationPictureProfile image={userPublicationsImages[publication.id]} publicationId={publication.id} />
+          )
+        }
       </div>
 
-      <div class="flex pt-4">
-        <div class="flex-1 text-center px-4 py-2 m-2">
-          <img
-            class="w-full"
-            src="https://images.unsplash.com/photo-1487530811176-3780de880c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80"
-          />
-        </div>
-        <div class="flex-1 text-center px-4 py-2 m-2">
-          <img
-            class="w-full"
-            src="https://images.unsplash.com/photo-1487530811176-3780de880c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80"
-          />
-        </div>
-        <div class="flex-1 text-center px-4 py-2 m-2">
-          <img
-            class="w-full"
-            src="https://images.unsplash.com/photo-1487530811176-3780de880c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80"
-          />
-        </div>
-      </div>
-
-      <div class="flex pt-4">
-        <div class="flex-1 text-center px-4 py-2 m-2">
-          <img
-            class="w-full"
-            src="https://images.unsplash.com/photo-1487530811176-3780de880c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80"
-          />
-        </div>
-        <div class="flex-1 text-center px-4 py-2 m-2">
-          <img
-            class="w-full"
-            src="https://images.unsplash.com/photo-1487530811176-3780de880c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80"
-          />
-        </div>
-        <div class="flex-1 text-center px-4 py-2 m-2">
-          <img
-            class="w-full"
-            src="https://images.unsplash.com/photo-1487530811176-3780de880c2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80"
-          />
-        </div>
-      </div>
     </div>
   </>
 )

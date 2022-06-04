@@ -1,6 +1,4 @@
-import axios from 'axios';
 import React, { Component } from 'react';
-import Cookies from 'universal-cookie';
 import { DoRegister } from '../Service/Services'
 
 function Success(props) {
@@ -204,4 +202,3 @@ export default class Register extends Component {
     )
   }
 }
-

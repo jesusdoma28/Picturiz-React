@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Nav = ({
     userAvatar,
@@ -74,6 +75,7 @@ const Nav = ({
                     <button
                         class="flex-shrink-0 p-1 border-transparent text-gray-700 rounded-full hover:text-gray-600 focus:outline-none focus:text-gray-600 transition duration-150 ease-in-out"
                         aria-label="Notifications"
+                        onClick={() => window.location.href = './home'}
                     >
                         <svg
                             class="h-6 w-6"
@@ -150,19 +152,21 @@ const Nav = ({
                     {/* <!-- Profile dropdown --> */}
                     <div class="ml-4 relative flex-shrink-0">
                         <div>
-                            <button
-                                class="flex rounded-full border-gray-700 transition duration-150 ease-in-out"
-                                id="user-menu"
-                                aria-label="User menu"
-                                aria-haspopup="true"
-                                onClick={() => window.location.href='./profile?user_id=' + userAuthId}
-                            >
-                                <img
-                                    class="h-8 w-8 rounded-full"
-                                    src={userAvatar}
-                                    alt
-                                />
-                            </button>
+                            {/* <Link to="/profile?user_id=1" > */}
+                                <button
+                                    class="flex rounded-full border-gray-700 transition duration-150 ease-in-out"
+                                    id="user-menu"
+                                    aria-label="User menu"
+                                    aria-haspopup="true"
+                                    onClick={() => window.location.href = './profile?user_id=' + userAuthId}
+                                >
+                                    <img
+                                        class="h-8 w-8 rounded-full"
+                                        src={userAvatar}
+                                        alt
+                                    />
+                                </button>
+                            {/* </Link> */}
                         </div>
                     </div>
                 </div>

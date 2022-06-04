@@ -1,7 +1,7 @@
 import React, { Component, useState } from 'react'
 import Nav from './Utilidades/Nav';
 import Publi from './Utilidades/Publi';
-import { getFeed, getAvatar, getUserAuthId } from '../Service/Services'
+import { getFeed, getUserAuthId, getAvatarByUserId } from '../Service/Services'
 
 
 export default class Home extends Component {
@@ -22,9 +22,10 @@ export default class Home extends Component {
 
   async componentDidMount() {
     console.log('mounted')
-
-    const userAvatar = await getAvatar();
+    
     const userAuthId = await getUserAuthId();
+    const userAvatar = await getAvatarByUserId(userAuthId);
+    
 
     const responseJson = await getFeed();
 
@@ -34,7 +35,8 @@ export default class Home extends Component {
   async componentDidUpdate() {
     console.log('updated')
 
-    const userAvatar = await getAvatar();
+    const userAuthId = await getUserAuthId();
+    const userAvatar = await getAvatarByUserId(userAuthId);
 
     const responseJson = await getFeed();
 
