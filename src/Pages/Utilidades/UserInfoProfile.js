@@ -1,5 +1,6 @@
 import React from 'react';
 import PublicationPictureProfile from './PublicationPictureProfile';
+import { changeFollow } from '../../Service/Services';
 
 function ShowEditProfile(props) {
   const userAuthId = props.userAuthId;
@@ -16,6 +17,41 @@ function ShowEditProfile(props) {
   }
 }
 
+function ShowFollowUnfollow(props) {
+  const userAuthId = props.userAuthId;
+  const userId = props.userId;
+  const follow = props.follow;
+
+  async function changeFollowUser() {
+    const responseJson = await changeFollow(userId, follow);
+    console.log('changeFollowUser:');
+    console.log(responseJson);
+  }
+
+  if (userAuthId != userId) {
+    if (follow == true) {
+      return (
+        <span class="text-base font-semibold text-gray-700 mr-2">
+          <button
+            class="bg-red-500 text-white font-semibold py-2 px-4 border border-gray-600 hover:border-transparent rounded"
+            onClick={changeFollowUser}
+          >Unfollow</button>
+        </span>
+      );
+    }
+    else if (follow == false) {
+      return (
+        <span class="text-base font-semibold text-gray-700 mr-2">
+          <button
+            class="bg-green-500 text-white font-semibold py-2 px-4 border border-gray-600 hover:border-transparent rounded"
+            onClick={changeFollowUser}
+          >Follow</button>
+        </span>
+      );
+    }
+  }
+}
+
 const UserInfoProfile = ({
   userAvatar,
   user,
@@ -24,16 +60,17 @@ const UserInfoProfile = ({
   numFollowers,
   numFollowed,
   userPublicationsImages,
-  userAuthId
+  userAuthId,
+  follow
 }) => (
   <>
-    <div class="bg-gray-100 h-screen px-48">
+    <div class="bg-gray-100 h-full h-screen px-48 mb-15">
       <div class="flex md:flex-row-reverse flex-wrap">
         <div class="w-full md:w-3/4 p-4 text-center">
           <div class="text-left pl-4 pt-3">
             <span class="text-base text-gray-700 text-2xl mr-2">{user.username}</span>
             <ShowEditProfile userAuthId={userAuthId} userId={user.id}></ShowEditProfile>
-
+            <ShowFollowUnfollow userAuthId={userAuthId} userId={user.id} follow={follow}></ShowFollowUnfollow>
           </div>
 
           <div class="text-left pl-4 pt-3">
@@ -81,27 +118,8 @@ const UserInfoProfile = ({
 
       {/* <!--post icon and title--> */}
       <div class="flex flex-row mt-4 justify-center mr-16">
+
         <div class="flex text-gray-700 text-center py-2 m-2 pr-5">
-          <div class="flex inline-flex">
-            <button
-              class="border-transparent text-gray-800 rounded-full hover:text-blue-600 focus:outline-none focus:text-gray-600"
-              aria-label="Notifications"
-            >
-              <svg
-                class="h-6 w-6"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z"
-                />
-              </svg>
-            </button>
-          </div>
           <div class="flex inline-flex ml-2 mt-1">
             <h3 class="text-sm font-bold text-gray-800 mr-2">POSTS</h3>
           </div>
@@ -189,7 +207,7 @@ const UserInfoProfile = ({
       <div class="container mx-auto space-y-2 lg:space-y-0 lg:gap-2 lg:grid lg:grid-cols-3">
         {
           publications.map((publication) =>
-            <PublicationPictureProfile image={userPublicationsImages[publication.id]} publicationId={publication.id} />
+            <PublicationPictureProfile image={userPublicationsImages[publication.id]} publicationId={publication.id} userAuthId={userAuthId} userId={user.id} />
           )
         }
       </div>

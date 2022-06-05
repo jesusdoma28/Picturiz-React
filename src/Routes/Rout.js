@@ -7,6 +7,7 @@ import Home from '../Pages/Home';
 import Profile from '../Pages/Profile';
 import Image from '../Pages/Image';
 import EditProfile from '../Pages/EditProfile';
+import UploadPost from '../Pages/UploadPost';
 
 function Rout() {
   return (
@@ -18,6 +19,9 @@ function Rout() {
           <Route exact path="/profile" element={<Profile/>}/>
           <Route exact path="/publicationDetails" element={<Image/>}/>
           <Route exact path="/editProfile" element={<EditProfile/>}/>
+          <Route exact path="/uploadPost" element={<UploadPost/>}/>
+
+          
           {/*<Route path="*" element={<NotFound/>}/> */}
           
           

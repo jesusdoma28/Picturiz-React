@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Nav from './Nav';
-import { getUserInfo, getUserAuthId, getAvatarByUserId, DoUpdate, UpdateAvatar } from '../../Service/Services';
+import Nav from './Utilidades/Nav';
+import { getUserInfo, getUserAuthId, getAvatarByUserId, UploadPost } from '../Service/Services';
 
 function Success(props) {
     const mostrar = props.show;
@@ -120,21 +120,11 @@ export default class UserEditInfo extends Component {
             userAvatar: null,
             user: [],
             form: {
-                name: '',
-                last_name: '',
-                username: '',
-                email: '',
-                birthday: '',
-                info: '',
+                description: '',
                 image: null
             },
-            haveErrors: false,
-            updated: false,
-            errors: [],
-
-            updatedImage: false,
-            haveErrorsImage: false,
-
+            
+            uploaded: false,
             cargando: true
         };
     }
@@ -188,19 +178,13 @@ export default class UserEditInfo extends Component {
         })
     }
 
-    updateUserInfo = async () => {
-        const responseJson = await DoUpdate(this.state.form, this.state.user);
-
-        console.log('errors:');
+    uploadPost = async () => {
+        const responseJson = await UploadPost(this.state.form.image, this.state.user.id, this.state.form.description);
+        console.log('uploaded:');
         console.log(responseJson);
-        this.setState({ errors: responseJson.errors, updated: responseJson.updated, haveErrors: responseJson.haveErrors })
-    }
+        this.setState({ uploaded: responseJson.updated })
 
-    updateUserAvatar = async () => {
-        const responseJson = await UpdateAvatar(this.state.form.image);
-        console.log('avatar:');
-        console.log(responseJson);
-        this.setState({ updatedImage: responseJson.updatedImage, haveErrorsImage: responseJson.haveErrorsImage })
+        window.location.href = './profile?user_id=' + this.state.userAuthId;
     }
 
     render() {
@@ -209,71 +193,35 @@ export default class UserEditInfo extends Component {
         if (cargando == true) {
             return (
                 <>
-
+                    <Nav userAvatar={userAvatar} userAuthId={userAuthId} />
                 </>
             )
         }
         else {
             return (
                 <>
+                    <Nav userAvatar={userAvatar} userAuthId={userAuthId} />
+
                     <div class="bg-gray-100 h-screen">
                         <div className="App">
                             {/* <!-- component --> */}
                             <div className='bg-gray-100 grid place-items-center'>
-                                <Errors show={this.state.haveErrors} errors={this.state.errors}></Errors>
-                                <Success show={this.state.updated}></Success>
                                 <div className="min-h-screen flex justify-center items-center">
                                     <div className="bg-white p-5 border-[1px] -mt-5 border-slate-200 rounded-md flex flex-col items-center space-y-2">
-                                        <div class="w-24 h-24 relative mb-4">
-                                            <div class="group w-full h-full rounded-full overflow-hidden shadow-inner text-center bg-purple table">
-                                                <img src={userAvatar} alt="avatar" class="object-cover object-center w-full h-full visible" />
-                                            </div>
-                                        </div>
-                                        <div className="flex flex-col mb-40 bg-blue-400 rounded">
-                                            <label htmlFor='name' className='font-bold'>Name</label>
-                                            <input className="p-3 border-[1px] border-slate-500 rounded-sm w-80" id='name' placeholder={user.name} onChange={this.handleChange} />
-                                        </div>
 
-                                        <div className="flex flex-col mb-40 bg-blue-400 rounded">
-                                            <label htmlFor='last_name' className='font-bold'>Last Name</label>
-                                            <input className="p-3 border-[1px] border-slate-500 rounded-sm w-80" id='last_name' placeholder={user.last_name} onChange={this.handleChange} />
-                                        </div>
-
-                                        <div className="flex flex-col mb-40 bg-blue-400 rounded">
-                                            <label htmlFor='birthday' className='font-bold'>Birthday</label>
-                                            <input className="p-3 border-[1px] border-slate-500 rounded-sm w-80" id='birthday' type="date" placeholder={user.birthday} onChange={this.handleChange} />
-                                        </div>
-
-                                        <div className="flex flex-col mb-40 bg-blue-400 rounded">
-                                            <label htmlFor='username' className='font-bold'>Username</label>
-                                            <input className="p-3 border-[1px] border-slate-500 rounded-sm w-80" id='username' placeholder={user.username} onChange={this.handleChange} />
-                                        </div>
-
-                                        <div className="flex flex-col mb-40 bg-blue-400 rounded">
-                                            <label htmlFor='email' className='font-bold'>Email</label>
-                                            <input className="p-3 border-[1px] border-slate-500 rounded-sm w-80" id='email' placeholder={user.email} onChange={this.handleChange} />
-                                        </div>
-
-                                        <div className="flex flex-col mb-40 bg-blue-400 rounded">
-                                            <label htmlFor='info' className='font-bold'>Info</label>
-                                            <input className="p-3 border-[1px] border-slate-500 rounded-sm w-80 h-20" type='text' id='info' placeholder={user.info} onChange={this.handleChange} />
-                                        </div>
-
-
-                                        <div className="flex flex-col space-y-5 w-full">
-                                            <button className="w-full bg-[#0070ba]  p-3 text-white font-bold transition duration-200 hover:bg-[#003087]" onClick={this.updateUserInfo}>Save Info</button>
-                                        </div>
-
-
-
-                                        <div className="flex flex-col mb-40 bg-blue-400 rounded mt-5">
-                                            <label htmlFor='image' className='font-bold'>Avatar</label>
+                                        <div className="flex flex-col bg-blue-400 rounded mt-5">
+                                            <label htmlFor='image' className='font-bold'>Image</label>
                                             <input className="p-3 border-[1px] border-slate-500 rounded-sm w-80 h-20" type='file' id='image' onChange={e => this.handleImage(e)} />
                                         </div>
-
-                                        <div className="flex flex-col space-y-5 w-full">
-                                            <button className="w-full bg-[#0070ba]  p-3 text-white font-bold transition duration-200 hover:bg-[#003087]" onClick={this.updateUserAvatar}>Change Avatar</button>
+                                        <div className="flex flex-col mb-20 bg-blue-400 rounded">
+                                            <label htmlFor='description' className='font-bold'>Description</label>
+                                            <input className="p-3 border-[1px] border-slate-500 rounded-sm w-80 h-20" type='text' id='description' onChange={this.handleChange} />
                                         </div>
+
+                                        <div className="flex flex-col space-y-10 mt-20 w-full">
+                                            <button className="w-full bg-[#0070ba]  p-3 text-white font-bold transition duration-200 hover:bg-[#003087]" onClick={this.uploadPost}>Post</button>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>

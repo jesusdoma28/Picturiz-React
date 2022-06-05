@@ -95,6 +95,26 @@ const Nav = ({
                     <button
                         class="flex-shrink-0 p-1 border-transparent text-gray-700 rounded-full hover:text-gray-600 focus:outline-none focus:text-gray-600 transition duration-150 ease-in-out"
                         aria-label="Notifications"
+                        onClick={() => window.location.href = './uploadPost?user_id=' + userAuthId}
+                    >
+                        <svg
+                            class="h-6 w-6"
+                            fill="none"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z"
+                            />
+                        </svg>
+                    </button>
+
+                    {/* <button
+                        class="flex-shrink-0 p-1 border-transparent text-gray-700 rounded-full hover:text-gray-600 focus:outline-none focus:text-gray-600 transition duration-150 ease-in-out"
+                        aria-label="Notifications"
                     >
                         <svg
                             class="h-6 w-6"
@@ -147,25 +167,25 @@ const Nav = ({
                                 d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
                             />
                         </svg>
-                    </button>
+                    </button> */}
 
                     {/* <!-- Profile dropdown --> */}
                     <div class="ml-4 relative flex-shrink-0">
                         <div>
                             {/* <Link to="/profile?user_id=1" > */}
-                                <button
-                                    class="flex rounded-full border-gray-700 transition duration-150 ease-in-out"
-                                    id="user-menu"
-                                    aria-label="User menu"
-                                    aria-haspopup="true"
-                                    onClick={() => window.location.href = './profile?user_id=' + userAuthId}
-                                >
-                                    <img
-                                        class="h-8 w-8 rounded-full"
-                                        src={userAvatar}
-                                        alt
-                                    />
-                                </button>
+                            <button
+                                class="flex rounded-full border-gray-700 transition duration-150 ease-in-out"
+                                id="user-menu"
+                                aria-label="User menu"
+                                aria-haspopup="true"
+                                onClick={() => window.location.href = './profile?user_id=' + userAuthId}
+                            >
+                                <img
+                                    class="h-8 w-8 rounded-full"
+                                    src={userAvatar}
+                                    alt
+                                />
+                            </button>
                             {/* </Link> */}
                         </div>
                     </div>
