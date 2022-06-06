@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { changeMeGusta, createComment } from '../../Service/Services'
+import { changeMeGusta, createComment, getAvatarByUserId } from '../../Service/Services'
 
 var mostrar = false;
 
@@ -109,7 +109,9 @@ function ShowComments(props) {
 
   return (
     <div class="text-sm mx-4 mt-2 mb-4">
-      <span class="font-semibold">{userComment.username}</span> {comment.text}
+      <button onClick={() => window.location.href = './profile?user_id=' + userComment.id}>
+        <span class="font-semibold">{userComment.username}</span>
+      </button> {comment.text}
     </div>
   );
 }
@@ -123,7 +125,6 @@ function changeMostrar() {
   }
 }
 
-
 const Publi = ({
   publi,
   likes,
@@ -132,7 +133,7 @@ const Publi = ({
   image,
   comments,
   userComments,
-  userAvatar,
+  userAvatar
 }) => (
 
   <div class="bg-gray-100 p-4 grid place-items-center">
@@ -162,7 +163,9 @@ const Publi = ({
       </div>
       <div class="font-semibold text-sm mx-4 mt-2 mb-4">{likes} likes</div>
       <div class="text-sm mx-4 mt-2 mb-4">
-        <span class="font-semibold">{user.username}</span> {publi.description}
+        <button onClick={() => window.location.href = './profile?user_id=' + user.id}>
+          <span class="font-semibold">{user.username}</span>
+        </button> {publi.description}
       </div>
       <Comments comments={comments} userComments={userComments} mostrar={mostrar} publicationId={publi.id} ></Comments>
 

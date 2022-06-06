@@ -8,24 +8,26 @@ import Profile from '../Pages/Profile';
 import Image from '../Pages/Image';
 import EditProfile from '../Pages/EditProfile';
 import UploadPost from '../Pages/UploadPost';
+import FollowersList from '../Pages/FollowersList';
+import FollowedList from '../Pages/FollowedList';
+import { Search } from '../Pages/Search';
 
 function Rout() {
   return (
     <Router>
-        <Routes>
-          <Route exact path="/" element={<Login/>}/>
-          <Route exact path="/register" element={<Register/>}/>
-          <Route exact path="/home" element={<Home/>}/>
-          <Route exact path="/profile" element={<Profile/>}/>
-          <Route exact path="/publicationDetails" element={<Image/>}/>
-          <Route exact path="/editProfile" element={<EditProfile/>}/>
-          <Route exact path="/uploadPost" element={<UploadPost/>}/>
-
-          
-          {/*<Route path="*" element={<NotFound/>}/> */}
-          
-          
-        </Routes>
+      <Routes>
+        <Route exact path="/" element={<Login />} />
+        <Route exact path="/register" element={<Register />} />
+        <Route exact path="/home" element={<Home />} />
+        <Route exact path="/profile" element={<Profile />} />
+        <Route exact path="/publicationDetails" element={<Image />} />
+        <Route exact path="/editProfile" element={<EditProfile />} />
+        <Route exact path="/uploadPost" element={<UploadPost />} />
+        <Route exact path="/followers" element={<FollowersList />} />
+        <Route exact path="/usersFollowing" element={<FollowedList />} />
+        <Route exact path="/search" element={<Search />} />
+        {/* <Route exact path="/search" element={<Search/>}/> */}
+      </Routes>
     </Router>
   );
 }

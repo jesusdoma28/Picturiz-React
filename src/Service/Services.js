@@ -448,7 +448,7 @@ export async function UpdateAvatar(image) {
         respuesta = response;
         console.log('respuesta imagen:');
         console.log(respuesta);
-        
+
       } else {
         alert('sin datos')
       }
@@ -481,7 +481,7 @@ export async function deletePublication(publication_id) {
       if (response != null) {
         respuesta = response;
         console.log(respuesta);
-        
+
       } else {
         alert('sin datos')
       }
@@ -518,7 +518,7 @@ export async function UploadPost(image, user_id, description) {
         respuesta = response;
         console.log('respuesta upload post:');
         console.log(respuesta);
-        
+
       } else {
         alert('sin datos')
       }
@@ -613,6 +613,34 @@ export async function createComment(text, publication_id) {
     data: {
       text: text,
       publication_id: publication_id
+    }
+  })
+    .then(response => {
+      return response.data;
+    })
+    .then(response => {
+      if (response != null) {
+        respuesta = response;
+      } else {
+        alert('sin datos')
+      }
+    })
+    .catch(function (error) {
+      //console.log(error);
+      //alert('El email o la contraseña no son correctos')
+    });
+
+  return respuesta;
+}
+
+
+export async function logout() {
+  var respuesta;
+  await axios({
+    method: 'get',
+    url: baseUrl + 'logout',
+    headers: {
+      'Authorization': 'Bearer ' + apiToken
     }
   })
     .then(response => {

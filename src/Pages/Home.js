@@ -25,11 +25,10 @@ export default class Home extends Component {
     
     const userAuthId = await getUserAuthId();
     const userAvatar = await getAvatarByUserId(userAuthId);
-    
 
     const responseJson = await getFeed();
 
-    this.setState({ publis: responseJson.publis, likes: responseJson.likes, cargando: false, meGusta: responseJson.meGusta, users: responseJson.users, images: responseJson.images, userAvatar: userAvatar, comments: responseJson.comments, userComments: responseJson.userComments, userAuthId: userAuthId })
+    this.setState({ publis: responseJson.publis, likes: responseJson.likes, cargando: false, meGusta: responseJson.meGusta, users: responseJson.users, images: responseJson.images, userAvatar: userAvatar, comments: responseJson.comments, userComments: responseJson.userComments, userAuthId: userAuthId, publisAvatar: responseJson.avatars })
   }
 
   async componentDidUpdate() {
@@ -40,11 +39,11 @@ export default class Home extends Component {
 
     const responseJson = await getFeed();
 
-    this.setState({ publis: responseJson.publis, likes: responseJson.likes, cargando: false, meGusta: responseJson.meGusta, users: responseJson.users, images: responseJson.images, userAvatar: userAvatar, comments: responseJson.comments, userComments: responseJson.userComments });
+    this.setState({ publis: responseJson.publis, likes: responseJson.likes, cargando: false, meGusta: responseJson.meGusta, users: responseJson.users, images: responseJson.images, userAvatar: userAvatar, comments: responseJson.comments, userComments: responseJson.userComments, publisAvatar: responseJson.avatars });
   }
 
   render() {
-    const { cargando, publis, likes, meGusta, users, images, userAvatar, comments, userComments, userAuthId } = this.state
+    const { cargando, publis, likes, meGusta, users, images, userAvatar, comments, userComments, userAuthId, publisAvatar } = this.state
 
     return (
       <>
@@ -60,7 +59,7 @@ export default class Home extends Component {
                 image = {images[publi.id]}
                 comments = {comments[publi.id]}
                 userComments = {userComments[publi.id]}
-                userAvatar = {userAvatar}
+                userAvatar = {publisAvatar[publi.id]}
               />)
           }
         </section>

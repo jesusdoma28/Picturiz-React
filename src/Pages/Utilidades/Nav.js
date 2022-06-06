@@ -1,5 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { logout } from '../../Service/Services';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
+
+async function doLogout() {
+    const responseJson = await logout();
+
+    if (responseJson.logout == true) {
+        window.location.href = "./";
+        cookies.remove('token');
+    }
+}
 
 const Nav = ({
     userAvatar,
@@ -19,7 +31,7 @@ const Nav = ({
                         </div>
                     </div>
                 </div>
-                <div class="flex-1 flex items-center justify-center px-2 lg:ml-12">
+                {/* <div class="flex-1 flex items-center justify-center px-2 lg:ml-12">
                     <div class="max-w-lg w-full lg:max-w-xs">
                         <label for="search" class="sr-only">Search</label>
                         <div class="relative">
@@ -40,7 +52,7 @@ const Nav = ({
                             />
                         </div>
                     </div>
-                </div>
+                </div> */}
                 <div class="flex items-center lg:hidden">
                     {/* <!-- Mobile menu button --> */}
                     <button
@@ -90,6 +102,20 @@ const Nav = ({
                                 d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
                             />
                         </svg>
+                    </button>
+
+                    <button
+                        class="flex-shrink-0 p-1 border-transparent text-gray-700 rounded-full hover:text-gray-600 focus:outline-none focus:text-gray-600 transition duration-150 ease-in-out"
+                        aria-label="Notifications"
+                        // onClick={() => window.location.href = './search'}
+                    >
+                        <svg class="h-6 w-6 text-gray-700" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                        clip-rule="evenodd"
+                                    />
+                                </svg>
                     </button>
 
                     <button
@@ -172,7 +198,6 @@ const Nav = ({
                     {/* <!-- Profile dropdown --> */}
                     <div class="ml-4 relative flex-shrink-0">
                         <div>
-                            {/* <Link to="/profile?user_id=1" > */}
                             <button
                                 class="flex rounded-full border-gray-700 transition duration-150 ease-in-out"
                                 id="user-menu"
@@ -189,6 +214,16 @@ const Nav = ({
                             {/* </Link> */}
                         </div>
                     </div>
+
+                    <button
+                        class="flex-shrink-0 p-1 border-transparent text-gray-700 rounded-full hover:text-gray-600 focus:outline-none focus:text-gray-600 transition duration-150 ease-in-out"
+                        aria-label="Notifications"
+                        onClick={doLogout}
+                    >
+
+                        <img src="logout.svg" class="h-6 w-6 ml-2"></img>
+
+                    </button>
                 </div>
             </div>
         </div>

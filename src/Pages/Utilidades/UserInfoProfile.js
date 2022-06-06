@@ -77,12 +77,16 @@ const UserInfoProfile = ({
             <span class="text-base font-semibold text-gray-700 mr-2">
               <b>{numPost}</b> posts
             </span>
-            <span class="text-base font-semibold text-gray-700 mr-2">
-              <b>{numFollowers}</b> followers
-            </span>
-            <span class="text-base font-semibold text-gray-700">
-              <b>{numFollowed}</b> following
-            </span>
+            <button onClick={() => window.location.href = './followers?user_id=' + user.id}>
+              <span class="text-base font-semibold text-gray-700 mr-2">
+                <b>{numFollowers}</b> followers
+              </span>
+            </button>
+            <button onClick={() => window.location.href = './usersFollowing?user_id=' + user.id}>
+              <span class="text-base font-semibold text-gray-700">
+                <b>{numFollowed}</b> following
+              </span>
+            </button>
           </div>
 
           <div class="text-left pl-4 pt-3">
