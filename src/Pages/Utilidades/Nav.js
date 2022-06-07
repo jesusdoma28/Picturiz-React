@@ -107,7 +107,7 @@ const Nav = ({
                     <button
                         class="flex-shrink-0 p-1 border-transparent text-gray-700 rounded-full hover:text-gray-600 focus:outline-none focus:text-gray-600 transition duration-150 ease-in-out"
                         aria-label="Notifications"
-                        // onClick={() => window.location.href = './search'}
+                        onClick={() => window.location.href = './search'}
                     >
                         <svg class="h-6 w-6 text-gray-700" fill="currentColor" viewBox="0 0 20 20">
                                     <path

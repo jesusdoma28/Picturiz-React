@@ -662,5 +662,38 @@ export async function logout() {
 }
 
 
+export async function getResultSearch(text) {
+  var respuesta;
+  console.log('getResultSearch text:');
+  console.log(text);
+  await axios({
+    method: 'post',
+    url: baseUrl + 'search',
+    headers: {
+      'Authorization': 'Bearer ' + apiToken
+    },
+    data: {
+      text: text
+    }
+  })
+    .then(response => {
+      return response.data;
+    })
+    .then(response => {
+      if (response != null) {
+        respuesta = response;
+      } else {
+        alert('sin datos')
+      }
+    })
+    .catch(function (error) {
+      //console.log(error);
+      //alert('El email o la contraseña no son correctos')
+    });
+
+  return respuesta;
+}
+
+
 
 

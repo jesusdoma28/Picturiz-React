@@ -10,7 +10,7 @@ import EditProfile from '../Pages/EditProfile';
 import UploadPost from '../Pages/UploadPost';
 import FollowersList from '../Pages/FollowersList';
 import FollowedList from '../Pages/FollowedList';
-import { Search } from '../Pages/Search';
+import Search from '../Pages/Search';
 
 function Rout() {
   return (
