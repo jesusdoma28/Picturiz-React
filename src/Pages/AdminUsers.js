@@ -2,8 +2,9 @@ import React, { Component, useState } from 'react'
 import Nav from './Utilidades/Nav';
 import { getUserAuthId, getAvatarByUserId, getUserAuthRole, getAllUsers, deleteUserByUserId } from '../Service/Services';
 import DataTable from 'react-data-table-component';
-import { Alert } from '@mui/material';
-import { Alignment } from 'react-data-table-component';
+import { PropagateLoader } from 'react-spinners';
+import { override } from '../Service/Constantes';
+
 function Buttons(props) {
     const user_id = props.user_id;
     async function borrar() {
@@ -156,7 +157,12 @@ export default class AdminUsers extends React.PureComponent {
 
         if (cargando == true) {
             return (
-                <Nav userAvatar={userAvatar} userAuthId={userAuthId} userAuthRole={userAuthRole} />
+                <>
+                    <Nav userAvatar={userAvatar} userAuthId={userAuthId} userAuthRole={userAuthRole} />
+                    <div className="sweet-loading min-h-screen flex h-screen justify-center items-center">
+                        <PropagateLoader color={'#4dbff0'} loading={cargando} css={override} size={15} />
+                    </div>
+                </>
             )
         } else {
             return (

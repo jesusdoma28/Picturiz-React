@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Nav from './Utilidades/Nav';
 import { getUserInfo, getUserAuthId, getUserPublicationsAndImages, getUserFollowers, getUserFollowed, getAvatarByUserId, getFollow, getUserAuthRole } from '../Service/Services';
 import UserInfoProfile from './Utilidades/UserInfoProfile';
+import { PropagateLoader } from 'react-spinners';
+import { override } from '../Service/Constantes';
 
 export default class Profile extends Component {
 
@@ -34,7 +36,7 @@ export default class Profile extends Component {
         console.log('user_idParam:');
         console.log(user_idParam);
 
-        if (user_idParam != null && user_idParam !== '' && user_idParam!='null') {
+        if (user_idParam != null && user_idParam !== '' && user_idParam != 'null') {
             var user_id = user_idParam;
         }
         else {
@@ -67,7 +69,7 @@ export default class Profile extends Component {
         console.log(user_idParam);
         var user_id = null;
 
-        if (user_idParam != null && user_idParam != '' && user_idParam!='null') {
+        if (user_idParam != null && user_idParam != '' && user_idParam != 'null') {
             user_id = user_idParam;
         }
         else {
@@ -102,7 +104,12 @@ export default class Profile extends Component {
 
         if (cargando == true) {
             return (
-                <Nav userAvatar={userAvatar} userAuthId={userAuthId} userAuthRole={userAuthRole} />
+                <>
+                    <Nav userAvatar={userAvatar} userAuthId={userAuthId} userAuthRole={userAuthRole} />
+                    <div className="sweet-loading min-h-screen flex h-screen justify-center items-center">
+                        <PropagateLoader color={'#4dbff0'} loading={cargando} css={override} size={15} />
+                    </div>
+                </>
             )
         }
         else {

@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import Nav from './Utilidades/Nav';
 import { getUserInfo, getUserAuthId, getAvatarByUserId, getUserAuthRole} from '../Service/Services';
 import UserEditInfo from './Utilidades/UserEditInfo';
+import { PropagateLoader } from 'react-spinners';
+import { override } from '../Service/Constantes';
 
 
 export default class EditProfile extends Component {
@@ -61,6 +63,9 @@ export default class EditProfile extends Component {
             return (
                 <>
                     <Nav userAvatar={userAvatar} userAuthId={userAuthId} userAuthRole={userAuthRole} />
+                    <div className="sweet-loading min-h-screen flex h-screen justify-center items-center">
+                        <PropagateLoader color={'#4dbff0'} loading={cargando} css={override} size={15} />
+                    </div>
                 </>
             )
         }

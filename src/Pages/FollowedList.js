@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import Nav from './Utilidades/Nav';
 import CardUser from './Utilidades/CardUser';
-import { getUserAuthId, getAvatarByUserId, getUserFollowed, getUserAuthRole } from '../Service/Services'
+import { getUserAuthId, getAvatarByUserId, getUserFollowed, getUserAuthRole } from '../Service/Services';
+import { PropagateLoader } from 'react-spinners';
+import { override } from '../Service/Constantes';
 
 
 export default class FollowedList extends Component {
@@ -78,7 +80,12 @@ export default class FollowedList extends Component {
 
         if (cargando == true) {
             return (
-                <Nav userAvatar={userAvatar} userAuthId={userAuthId} userAuthRole={userAuthRole} />
+                <>
+                    <Nav userAvatar={userAvatar} userAuthId={userAuthId} userAuthRole={userAuthRole} />
+                    <div className="sweet-loading min-h-screen flex h-screen justify-center items-center">
+                        <PropagateLoader color={'#4dbff0'} loading={cargando} css={override} size={15} />
+                    </div>
+                </>
             )
         }
         else {

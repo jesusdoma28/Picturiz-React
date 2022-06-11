@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Nav from './Utilidades/Nav';
 import { getUserInfo, getUserAuthId, getAvatarByUserId, updateUserById, updateAvatarByUserId, getUserAuthRole } from '../Service/Services';
+import { PropagateLoader } from 'react-spinners';
+import { override } from '../Service/Constantes';
 
 function Progress(props) {
     const mostrar = props.show;
@@ -275,6 +277,9 @@ export default class AdminUserEditInfo extends Component {
             return (
                 <>
                     <Nav userAvatar={userAvatar} userAuthId={userAuthId} userAuthRole={userAuthRole} />
+                    <div className="sweet-loading min-h-screen flex h-screen justify-center items-center">
+                        <PropagateLoader color={'#4dbff0'} loading={cargando} css={override} size={15} />
+                    </div>
                 </>
             )
         }
