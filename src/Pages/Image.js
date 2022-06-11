@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Nav from './Utilidades/Nav';
-import { getUserInfo, getUserAuthId, getAvatarByUserId, getPublicationAndImageById, getLikesOfPublicationById, getCommentsAndUsersByPublicationId } from '../Service/Services'
+import { getUserInfo, getUserAuthId, getAvatarByUserId, getPublicationAndImageById, getLikesOfPublicationById, getCommentsAndUsersByPublicationId, getUserAuthRole } from '../Service/Services'
 import Publi from './Utilidades/Publi';
 
 
@@ -18,6 +18,7 @@ export default class Image extends Component {
             user: null,
             comments: [],
             userComments: [],
+            userAuthRole: '',
             cargando: true
         };
     }
@@ -30,6 +31,7 @@ export default class Image extends Component {
 
         const authUserId = await getUserAuthId();
         const userAvatar = await getAvatarByUserId(authUserId);
+        const userAuthRole = await getUserAuthRole();
         const publicationAndImage = await getPublicationAndImageById(publication_id);
         const imageAvatar = await getAvatarByUserId(publicationAndImage.publication.user_id);
 
@@ -46,7 +48,7 @@ export default class Image extends Component {
         console.log(publication_id);
 
 
-        this.setState({ userAvatar: userAvatar, userAuthId: authUserId, image: publicationAndImage.image, publication: publicationAndImage.publication, imageAvatar: imageAvatar, userLiked: likes.meGusta, likes: likes.likes, user: user, comments: commentsAndUser.comments, userComments: commentsAndUser.userComments, cargando: false })
+        this.setState({ userAvatar: userAvatar, userAuthId: authUserId, image: publicationAndImage.image, publication: publicationAndImage.publication, imageAvatar: imageAvatar, userLiked: likes.meGusta, likes: likes.likes, user: user, comments: commentsAndUser.comments, userComments: commentsAndUser.userComments, userAuthRole: userAuthRole, cargando: false })
     }
 
     async componentDidUpdate() {
@@ -58,6 +60,7 @@ export default class Image extends Component {
 
         const authUserId = await getUserAuthId();
         const userAvatar = await getAvatarByUserId(authUserId);
+        const userAuthRole = await getUserAuthRole();
         const publicationAndImage = await getPublicationAndImageById(publication_id);
         const imageAvatar = await getAvatarByUserId(publicationAndImage.publication.user_id);
 
@@ -73,24 +76,24 @@ export default class Image extends Component {
         console.log(publication_id);
 
 
-        this.setState({ userAvatar: userAvatar, userAuthId: authUserId, image: publicationAndImage.image, publication: publicationAndImage.publication, imageAvatar: imageAvatar, userLiked: likes.meGusta, likes: likes.likes, user: user, comments: commentsAndUser.comments, userComments: commentsAndUser.userComments })
+        this.setState({ userAvatar: userAvatar, userAuthId: authUserId, image: publicationAndImage.image, publication: publicationAndImage.publication, imageAvatar: imageAvatar, userLiked: likes.meGusta, likes: likes.likes, user: user, comments: commentsAndUser.comments, userComments: commentsAndUser.userComments, userAuthRole: userAuthRole })
     }
 
     render() {
-        const { cargando, userAvatar, userAuthId, image, publication, imageAvatar, likes, userLiked, user, comments, userComments } = this.state;
+        const { cargando, userAvatar, userAuthId, image, publication, imageAvatar, likes, userLiked, user, comments, userComments, userAuthRole } = this.state;
 
         if (cargando == true) {
             return (
                 <>
-                    <Nav userAvatar={userAvatar} userAuthId={userAuthId} />
+                    <Nav userAvatar={userAvatar} userAuthId={userAuthId} userAuthRole={userAuthRole} />
                 </>
             )
         }
         else {
             return (
                 <>
-                    <div class="bg-gray-100 h-screen">
-                        <Nav userAvatar={userAvatar} userAuthId={userAuthId} />
+                    <div className="bg-gray-100 h-screen">
+                        <Nav userAvatar={userAvatar} userAuthId={userAuthId} userAuthRole={userAuthRole} />
                         <Publi
                             publi={publication}
                             likes={likes}

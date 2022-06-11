@@ -15,7 +15,7 @@ function DeleteButton(props) {
     }
     if (userAuthId == userId) {
         return (
-            <button onClick={deletePubli} class="w-full bg-red-200 h-full grid place-items-center rounded">
+            <button onClick={deletePubli} className="w-full bg-red-200 h-full grid place-items-center rounded">
                 <img src="trash.svg" width="20px"></img>
             </button>
         );
@@ -29,11 +29,10 @@ const PublicationPictureProfile = ({
     userId
 }) => (
     <>
-        <div class="w-full grid place-items-center rounded h-full">
+        <div className="w-full grid place-items-center rounded h-full">
             <button onClick={() => window.location.href = './PublicationDetails?publication_id=' + publicationId}>
-                <div class="w-full rounded hover:shadow-2xl grid place-items-center">
-                    <img src={image}
-                        alt="image" />
+                <div className="w-full rounded hover:shadow-2xl grid place-items-center">
+                    <img src={image}/>
                 </div>
             </button>
 

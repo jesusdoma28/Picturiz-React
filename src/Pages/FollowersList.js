@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Nav from './Utilidades/Nav';
 import CardUser from './Utilidades/CardUser';
-import { getUserAuthId, getAvatarByUserId, getUserFollowers } from '../Service/Services'
+import { getUserAuthId, getAvatarByUserId, getUserFollowers, getUserAuthRole } from '../Service/Services'
 
 
 export default class FollowersList extends Component {
@@ -13,6 +13,7 @@ export default class FollowersList extends Component {
             followers: [],
             avatarsUsers: [],
             actualUser: null,
+            userAuthRole: '',
             cargando: true
         };
     }
@@ -22,6 +23,7 @@ export default class FollowersList extends Component {
 
         const userAuthId = await getUserAuthId();
         const userAvatar = await getAvatarByUserId(userAuthId);
+        const userAuthRole = await getUserAuthRole();
 
         var queryString = window.location.search;
         var urlParams = new URLSearchParams(queryString);
@@ -39,7 +41,7 @@ export default class FollowersList extends Component {
 
         const followers = await getUserFollowers(user_id);
 
-        this.setState({ cargando: false, userAvatar: userAvatar, userAuthId: userAuthId, followers: followers.users, avatarsUsers: followers.avatars, authFollowList: followers.authFollowList, actualUser: user_id });
+        this.setState({ cargando: false, userAvatar: userAvatar, userAuthId: userAuthId, followers: followers.users, avatarsUsers: followers.avatars, authFollowList: followers.authFollowList, actualUser: user_id, userAuthRole: userAuthRole });
     }
 
     async componentDidUpdate() {
@@ -47,6 +49,7 @@ export default class FollowersList extends Component {
 
         const userAuthId = await getUserAuthId();
         const userAvatar = await getAvatarByUserId(userAuthId);
+        const userAuthRole = await getUserAuthRole();
 
         var queryString = window.location.search;
         var urlParams = new URLSearchParams(queryString);
@@ -65,39 +68,39 @@ export default class FollowersList extends Component {
         const followers = await getUserFollowers(user_id);
 
 
-        this.setState({ userAvatar: userAvatar, userAuthId: userAuthId, followers: followers.users, avatarsUsers: followers.avatars, authFollowList: followers.authFollowList, actualUser: user_id });
+        this.setState({ userAvatar: userAvatar, userAuthId: userAuthId, followers: followers.users, avatarsUsers: followers.avatars, authFollowList: followers.authFollowList, actualUser: user_id, userAuthRole: userAuthRole });
     }
 
     render() {
-        const { cargando, userAvatar, userAuthId, followers, avatarsUsers, authFollowList, actualUser } = this.state
+        const { cargando, userAvatar, userAuthId, followers, avatarsUsers, authFollowList, actualUser, userAuthRole } = this.state
 
         if (cargando == true) {
             return (
-                <Nav userAvatar={userAvatar} userAuthId={userAuthId} />
+                <Nav userAvatar={userAvatar} userAuthId={userAuthId} userAuthRole={userAuthRole} />
             )
         }
         else {
             return (
                 <>
-                    <div class="bg-gray-100 h-full">
-                        <Nav userAvatar={userAvatar} userAuthId={userAuthId} />
-                        <div class="flex justify-center p-10 grid place-items-center h-80">
+                    <div className="bg-gray-100 h-full">
+                        <Nav userAvatar={userAvatar} userAuthId={userAuthId} userAuthRole={userAuthRole} />
+                        <div className="flex justify-center p-10 grid place-items-center h-80">
                             <button
                                 type="button"
-                                class="border border-gray-700 bg-gray-700 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-gray-800 focus:outline-none focus:shadow-outline"
+                                className="border border-gray-700 bg-gray-700 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-gray-800 focus:outline-none focus:shadow-outline"
                                 onClick={() => window.location.href = './profile?user_id=' + actualUser}
                             >
                                 Return to profile
                             </button>
-                            <h1 class="font-extrabold">Followers</h1>
+                            <h1 className="font-extrabold">Followers</h1>
 
-                            <div class="p-4 bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                            <div className="p-4 bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
 
-                                <div class="">
-                                    <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700 px-10">
+                                <div className="">
+                                    <ul role="list" className="divide-y divide-gray-200 dark:divide-gray-700 px-10">
                                         {
                                             followers.map((follower) =>
-                                                <li class="py-3 sm:py-4">
+                                                <li className="py-3 sm:py-4">
                                                     <CardUser user={follower} avatar={avatarsUsers[follower.id]} follow={authFollowList[follower.id]} userAuthId={userAuthId} />
                                                 </li>
                                             )

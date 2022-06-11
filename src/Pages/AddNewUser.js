@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Nav from './Nav';
-import { getUserInfo, getUserAuthId, getAvatarByUserId, DoUpdate, UpdateAvatar } from '../../Service/Services';
+import Nav from './Utilidades/Nav';
+import { getUserAuthId, getAvatarByUserId, DoRegister, getUserAuthRole } from '../Service/Services';
 
 function Progress(props) {
     const mostrar = props.show;
@@ -13,7 +13,7 @@ function Progress(props) {
                         <div className="max-w-lg bg-blue-200 mx-auto p-2">
                             <div className="flex space-x-2">
                                 <svg className="w-6 h-6 stroke-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                                <p className="text-blue-900 font-semibold">Updating...</p>
+                                <p className="text-blue-900 font-semibold">Creating...</p>
                             </div>
                         </div>
                     </div>
@@ -46,7 +46,7 @@ function Success(props) {
                                 Success
                             </div>
                             <div className="alert-description text-sm text-green-600">
-                                Your profile has been updated
+                                The new user has been created
                             </div>
                         </div>
                     </div>
@@ -129,17 +129,16 @@ function ShowError(props) {
             </div>
         </div>
     );
-
 }
 
-export default class UserEditInfo extends Component {
+
+export default class AddNewUser extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             userAuthId: '',
             userAvatar: '',
-            user: [],
             form: {
                 name: '',
                 last_name: '',
@@ -147,51 +146,46 @@ export default class UserEditInfo extends Component {
                 email: '',
                 birthday: '',
                 info: '',
-                image: ''
+                role_id: '',
+                image: '',
+                password: ''
             },
             userAuthRole: '',
 
             haveErrors: '',
-            updated: '',
+            created: '',
             errors: [],
 
-            updatedImage: '',
-            haveErrorsImage: '',
-
             cargando: true,
-            updating: false
+            creating: false
         };
     }
 
     async componentDidMount() {
         console.log('mounted');
-        /* var queryString = window.location.search;
-        var urlParams = new URLSearchParams(queryString);
-        var user_id = urlParams.get('user_id'); */
-
+        const userAuthRole = await getUserAuthRole();
         const authUserId = await getUserAuthId();
+
+        if (userAuthRole.id != 1) {
+            window.location.href = './';
+        }
         const userAvatar = await getAvatarByUserId(authUserId);
-        const user = await getUserInfo(authUserId);
-        console.log('id:');
-        console.log(user.id);
 
-
-        this.setState({ userAvatar: userAvatar, userAuthId: authUserId, user: user, form: { last_name: user.last_name }, cargando: false })
+        this.setState({ userAvatar: userAvatar, userAuthId: authUserId, userAuthRole: userAuthRole, cargando: false })
     }
 
     async componentDidUpdate() {
         console.log('updated');
-
-        /* var queryString = window.location.search;
-        var urlParams = new URLSearchParams(queryString);
-        var user_id = urlParams.get('user_id'); */
-
+        const userAuthRole = await getUserAuthRole();
         const authUserId = await getUserAuthId();
+
+        if (userAuthRole.id != 1) {
+            window.location.href = './';
+        }
         const userAvatar = await getAvatarByUserId(authUserId);
-        const user = await getUserInfo(authUserId);
 
 
-        this.setState({ userAvatar: userAvatar, userAuthId: authUserId, user: user })
+        this.setState({ userAvatar: userAvatar, userAuthId: authUserId, userAuthRole: userAuthRole })
     }
 
     handleChange = async e => {
@@ -212,98 +206,95 @@ export default class UserEditInfo extends Component {
         })
     }
 
-    updateUserInfo = async () => {
-        this.setState({ updating: true });
-        const responseJson = await DoUpdate(this.state.form, this.state.user);
+    addNewUser = async () => {
+        this.setState({ creating: true })
+        const responseJson = await DoRegister(this.state.form);
 
         console.log('errors:');
         console.log(responseJson);
-        this.setState({ errors: responseJson.errors, updated: responseJson.updated, haveErrors: responseJson.haveErrors, updating: false })
+        this.setState({ errors: responseJson.errors, created: responseJson.created, haveErrors: responseJson.haveErrors, creating: false })
     }
 
-    updateUserAvatar = async () => {
-        this.setState({ updating: true });
-        const responseJson = await UpdateAvatar(this.state.form.image);
-        console.log('avatar:');
-        console.log(responseJson);
-        this.setState({ updatedImage: responseJson.updatedImage, haveErrorsImage: responseJson.haveErrorsImage, updating: false })
-    }
 
     render() {
-        const { cargando, userAvatar, userAuthId, user } = this.state;
+        const { cargando, userAvatar, userAuthId, user, userAuthRole } = this.state;
 
         if (cargando == true) {
             return (
                 <>
-
+                    <Nav userAvatar={userAvatar} userAuthId={userAuthId} userAuthRole={userAuthRole} />
                 </>
             )
         }
         else {
             return (
                 <>
+                    <Nav userAvatar={userAvatar} userAuthId={userAuthId} userAuthRole={userAuthRole} />
+
                     <div className="bg-gray-100 h-screen">
                         <div className="App">
                             {/* <!-- component --> */}
-                            <div className='bg-gray-100 grid place-items-center'>
-                                <Progress show={this.state.updating}></Progress>
+                            <div className='min-h-screen bg-gray-100 grid place-items-center'>
                                 <Errors show={this.state.haveErrors} errors={this.state.errors}></Errors>
-                                <Success show={this.state.updated}></Success>
-                                <div className="min-h-screen flex justify-center items-center">
-                                    <div className="bg-white p-5 border-[1px] -mt-5 border-slate-200 rounded-md flex flex-col items-center space-y-2">
-                                        <div className="w-24 h-24 relative mb-4">
-                                            <div className="group w-full h-full rounded-full overflow-hidden shadow-inner text-center bg-purple table">
-                                                <img src={userAvatar} alt="avatar" className="object-cover object-center w-full h-full visible" />
+                                <Success show={this.state.created}></Success>
+                                <Progress show={this.state.creating}></Progress>
+                                <div className="justify-center items-center">
+                                    <label htmlFor='new_user' className='font-bold'>New User</label>
+                                    <div className='flex justify-center items-center'>
+                                        <div className="bg-white p-5 border-[1px] border-slate-200 rounded-md flex flex-col items-center space-y-2">
+                                            <div className="flex flex-col bg-blue-400 rounded">
+                                                <label htmlFor='name' className='font-bold'>Name</label>
+                                                <input className="p-3 border-[1px] border-slate-500 rounded-sm w-80" id='name' onChange={this.handleChange} />
                                             </div>
-                                        </div>
-                                        <div className="flex flex-col mb-40 bg-blue-400 rounded">
-                                            <label htmlFor='name' className='font-bold'>Name</label>
-                                            <input className="p-3 border-[1px] border-slate-500 rounded-sm w-80" id='name' defaultValue={user.name} onChange={this.handleChange} />
-                                        </div>
 
-                                        <div className="flex flex-col mb-40 bg-blue-400 rounded">
-                                            <label htmlFor='last_name' className='font-bold'>Last Name</label>
-                                            <input className="p-3 border-[1px] border-slate-500 rounded-sm w-80" id='last_name' defaultValue={user.last_name} onChange={this.handleChange} />
-                                        </div>
+                                            <div className="flex flex-col mb-40 bg-blue-400 rounded">
+                                                <label htmlFor='last_name' className='font-bold'>Last Name</label>
+                                                <input className="p-3 border-[1px] border-slate-500 rounded-sm w-80" id='last_name' onChange={this.handleChange} />
+                                            </div>
 
-                                        <div className="flex flex-col mb-40 bg-blue-400 rounded">
-                                            <label htmlFor='birthday' className='font-bold'>Birthday</label>
-                                            <input className="p-3 border-[1px] border-slate-500 rounded-sm w-80" id='birthday' type="date" defaultValue={user.birthday} onChange={this.handleChange} />
-                                        </div>
+                                            <div className="flex flex-col mb-40 bg-blue-400 rounded">
+                                                <label htmlFor='birthday' className='font-bold'>Birthday</label>
+                                                <input className="p-3 border-[1px] border-slate-500 rounded-sm w-80" id='birthday' type="date" onChange={this.handleChange} />
+                                            </div>
 
-                                        <div className="flex flex-col mb-40 bg-blue-400 rounded">
-                                            <label htmlFor='username' className='font-bold'>Username</label>
-                                            <input className="p-3 border-[1px] border-slate-500 rounded-sm w-80" id='username' defaultValue={user.username} onChange={this.handleChange} />
-                                        </div>
+                                            <div className="flex flex-col mb-40 bg-blue-400 rounded">
+                                                <label htmlFor='username' className='font-bold'>Username</label>
+                                                <input className="p-3 border-[1px] border-slate-500 rounded-sm w-80" id='username' onChange={this.handleChange} />
+                                            </div>
 
-                                        <div className="flex flex-col mb-40 bg-blue-400 rounded">
-                                            <label htmlFor='email' className='font-bold'>Email</label>
-                                            <input className="p-3 border-[1px] border-slate-500 rounded-sm w-80" id='email' defaultValue={user.email} onChange={this.handleChange} />
-                                        </div>
+                                            <div className="flex flex-col mb-40 bg-blue-400 rounded">
+                                                <label htmlFor='email' className='font-bold'>Email</label>
+                                                <input className="p-3 border-[1px] border-slate-500 rounded-sm w-80" id='email' onChange={this.handleChange} />
+                                            </div>
 
-                                        <div className="flex flex-col mb-40 bg-blue-400 rounded">
-                                            <label htmlFor='info' className='font-bold'>Info</label>
-                                            <input className="p-3 border-[1px] border-slate-500 rounded-sm w-80 h-20" type='text' id='info' defaultValue={user.info} onChange={this.handleChange} />
-                                        </div>
+                                            <div className="flex flex-col mb-40 bg-blue-400 rounded">
+                                                <label htmlFor='password' className='font-bold'>Password</label>
+                                                <input className="p-3 border-[1px] border-slate-500 rounded-sm w-80" id='password' onChange={this.handleChange} />
+                                            </div>
 
+                                            <div className="flex flex-col mb-40 bg-blue-400 rounded">
+                                                <label htmlFor='info' className='font-bold'>Info</label>
+                                                <input className="p-3 border-[1px] border-slate-500 rounded-sm w-80 h-20" type='text' id='info' onChange={this.handleChange} />
+                                            </div>
 
-                                        <div className="flex flex-col space-y-5 w-full">
-                                            <button className="w-full bg-[#0070ba]  p-3 text-white font-bold transition duration-200 hover:bg-[#003087]" onClick={this.updateUserInfo}>Save Info</button>
-                                        </div>
+                                            <div className="flex flex-col mb-40 bg-blue-400 rounded">
+                                                <label htmlFor='Role' className='font-bold'>Role</label>
+                                                <select className="p-1 border-[1px] border-slate-500 rounded-sm w-80 h-10" defaultValue={2} id='role_id' onChange={this.handleChange}>
+                                                    <option value='1'>Admin</option>
+                                                    <option value='2'>User</option>
+                                                </select>
 
-                                        <div className="flex flex-col mb-40 bg-blue-400 rounded mt-5">
-                                            <label htmlFor='image' className='font-bold'>Avatar</label>
-                                            <input className="p-3 border-[1px] border-slate-500 rounded-sm w-80 h-20" type='file' id='image' onChange={e => this.handleImage(e)} />
-                                        </div>
+                                            </div>
 
-                                        <div className="flex flex-col space-y-5 w-full">
-                                            <button className="w-full bg-[#0070ba]  p-3 text-white font-bold transition duration-200 hover:bg-[#003087]" onClick={this.updateUserAvatar}>Change Avatar</button>
+                                            <div className="flex flex-col space-y-5 w-full">
+                                                <button className="w-full bg-[#0070ba]  p-3 text-white font-bold transition duration-200 hover:bg-[#003087]" onClick={this.addNewUser}>Save Info</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div >
-                    </div>
+                        </div>
+                    </div >
                 </>
             )
         }

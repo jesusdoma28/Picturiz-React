@@ -124,6 +124,31 @@ export async function getUserAuthId() {
   return respuesta;
 }
 
+export async function getUserAuthRole() {
+  var respuesta;
+  await axios({
+    method: 'get',
+    url: baseUrl + 'getAuthUserRole',
+    headers: {
+      'Authorization': 'Bearer ' + apiToken
+    }
+  })
+    .then(response => {
+      return response.data;
+    })
+    .then(response => {
+      if (response != null) {
+        respuesta = response
+      } else {
+        //alert('sin datos')
+      }
+    })
+    .catch(function (error) {
+      //console.log(error);
+      //alert('El email o la contraseña no son correctos')
+    });
+  return respuesta;
+}
 
 export async function DoRegister(datos) {
   var respuesta;
@@ -138,7 +163,9 @@ export async function DoRegister(datos) {
       name: datos.name,
       password: datos.password,
       username: datos.username,
-      birthday: datos.birthday
+      birthday: datos.birthday,
+      info: datos.info,
+      role_id: datos.role_id
     }
   })
     .then(response => {
@@ -694,6 +721,144 @@ export async function getResultSearch(text) {
   return respuesta;
 }
 
+export async function getAllUsers() {
+  var respuesta;
+  await axios({
+    method: 'get',
+    url: baseUrl + 'getAllUsers',
+    headers: {
+      'Authorization': 'Bearer ' + apiToken
+    }
+  })
+    .then(response => {
+      return response.data;
+    })
+    .then(response => {
+      if (response != null) {
+        respuesta = response;
+      } else {
+        alert('sin datos')
+      }
+    })
+    .catch(function (error) {
+      //console.log(error);
+      //alert('El email o la contraseña no son correctos')
+    });
 
+  return respuesta;
+}
 
+export async function deleteUserByUserId(user_id) {
+  var respuesta;
+  await axios({
+    method: 'post',
+    url: baseUrl + 'deleteUserByUserId',
+    headers: {
+      'Authorization': 'Bearer ' + apiToken
+    },
+    data: {
+      user_id: user_id
+    }
+  })
+    .then(response => {
+      return response.data;
+    })
+    .then(response => {
+      if (response != null) {
+        respuesta = response;
+      } else {
+        alert('sin datos')
+      }
+    })
+    .catch(function (error) {
+      //console.log(error);
+      //alert('El email o la contraseña no son correctos')
+    });
 
+  return respuesta;
+}
+
+export async function updateUserById(datos, user) {
+  var respuesta;
+  console.log(datos);
+  console.log(user);
+  await axios({
+    method: 'post',
+    url: baseUrl + 'updateById',
+    headers: {
+      'Authorization': 'Bearer ' + apiToken
+    },
+    data: {
+      user_id: user.id,
+      email_new: datos.email,
+      last_name_new: datos.last_name,
+      name_new: datos.name,
+      username_new: datos.username,
+      birthday_new: datos.birthday,
+      info_new: datos.info,
+      role_id_new: datos.role_id,
+      email_old: user.email,
+      last_name_old: user.last_name,
+      name_old: user.name,
+      username_old: user.username,
+      birthday_old: user.birthday,
+      info_old: user.info
+    }
+  })
+    .then(response => {
+      return response.data;
+
+    })
+    .then(response => {
+      if (response != null) {
+        respuesta = response;
+        return response;
+      } else {
+        alert('sin datos')
+      }
+    })
+    .catch(function (error) {
+      //console.log(error);
+      //alert('El email o la contraseña no son correctos')
+    });
+
+  return respuesta;
+}
+
+export async function updateAvatarByUserId(image, user_id) {
+  var respuesta;
+  console.log('imagen:');
+  console.log(image);
+  await axios({
+    method: 'post',
+    url: baseUrl + 'updateImageByUserId',
+    headers: {
+      'Authorization': 'Bearer ' + apiToken,
+      'Content-Type': 'multipart/form-data'
+    },
+    data: {
+      image: image,
+      user_id: user_id
+    }
+  })
+    .then(response => {
+      return response.data;
+
+    })
+    .then(response => {
+      if (response != null) {
+        respuesta = response;
+        console.log('respuesta imagen:');
+        console.log(respuesta);
+
+      } else {
+        alert('sin datos')
+      }
+    })
+    .catch(function (error) {
+      //console.log(error);
+      //alert('El email o la contraseña no son correctos')
+    });
+
+  return respuesta;
+}

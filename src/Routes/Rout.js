@@ -11,6 +11,9 @@ import UploadPost from '../Pages/UploadPost';
 import FollowersList from '../Pages/FollowersList';
 import FollowedList from '../Pages/FollowedList';
 import Search from '../Pages/Search';
+import AdminUsers from '../Pages/AdminUsers';
+import AdminUserEditInfo from '../Pages/AdminUserEditInfo';
+import AddNewUser from '../Pages/AddNewUser';
 
 function Rout() {
   return (
@@ -26,6 +29,10 @@ function Rout() {
         <Route exact path="/followers" element={<FollowersList />} />
         <Route exact path="/usersFollowing" element={<FollowedList />} />
         <Route exact path="/search" element={<Search />} />
+        <Route exact path="/admin" element={<AdminUsers />} />
+        <Route exact path="/userEditInfo" element={<AdminUserEditInfo />} />
+        <Route exact path="/addNewUser" element={<AddNewUser />} />
+        
         {/* <Route exact path="/search" element={<Search/>}/> */}
       </Routes>
     </Router>

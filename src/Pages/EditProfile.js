@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
 import Nav from './Utilidades/Nav';
-import { getUserInfo, getUserAuthId, getAvatarByUserId} from '../Service/Services';
+import { getUserInfo, getUserAuthId, getAvatarByUserId, getUserAuthRole} from '../Service/Services';
 import UserEditInfo from './Utilidades/UserEditInfo';
 
 
-export default class Image extends Component {
+export default class EditProfile extends Component {
     constructor(props) {
         super(props);
         this.state = {
             userAvatar: null,
             userAuthId: null,
             user: null,
+            userAuthRole: '',
             cargando: true
         };
     }
@@ -23,13 +24,14 @@ export default class Image extends Component {
 
         const authUserId = await getUserAuthId();
         const userAvatar = await getAvatarByUserId(authUserId);
+        const userAuthRole = await getUserAuthRole();
 
         const user = await getUserInfo(authUserId);
         console.log('user:');
         console.log(user);
 
 
-        this.setState({ userAvatar: userAvatar, userAuthId: authUserId, user: user, cargando: false })
+        this.setState({ userAvatar: userAvatar, userAuthId: authUserId, user: user, userAuthRole: userAuthRole, cargando: false })
     }
 
     async componentDidUpdate() {
@@ -42,30 +44,31 @@ export default class Image extends Component {
 
         const authUserId = await getUserAuthId();
         const userAvatar = await getAvatarByUserId(authUserId);
+        const userAuthRole = await getUserAuthRole();
 
         const user = await getUserInfo(authUserId);
         console.log('user:');
         console.log(user);
 
 
-        this.setState({ userAvatar: userAvatar, userAuthId: authUserId, user: user })
+        this.setState({ userAvatar: userAvatar, userAuthId: authUserId, user: user, userAuthRole: userAuthRole })
     }
 
     render() {
-        const { cargando, userAvatar, userAuthId, user } = this.state;
+        const { cargando, userAvatar, userAuthId, user, userAuthRole } = this.state;
 
         if (cargando == true) {
             return (
                 <>
-                    <Nav userAvatar={userAvatar} userAuthId={userAuthId} />
+                    <Nav userAvatar={userAvatar} userAuthId={userAuthId} userAuthRole={userAuthRole} />
                 </>
             )
         }
         else {
             return (
                 <>
-                    <div class="bg-gray-100 h-screen">
-                        <Nav userAvatar={userAvatar} userAuthId={userAuthId} />
+                    <div className="bg-gray-100 h-screen">
+                        <Nav userAvatar={userAvatar} userAuthId={userAuthId} userAuthRole={userAuthRole} />
                         <UserEditInfo
                             user={user}
                             userAvatar={userAvatar}

@@ -60,22 +60,19 @@ function Comments(props) {
 
   async function postComment() {
     if (text != '' && text != null) {
-      const responseJson = await createComment(text, publicationId);
-      console.log('postComment Result:');
-      console.log(responseJson);
+      const responseJson = createComment(text, publicationId);
     }
   }
 
   function changeText(e) {
     console.log('text:');
     text = e.target.value;
-    console.log(text);
   }
 
   if (mostrar == true) {
     return (
       <>
-        <hr class="mx-5" />
+        <hr className="mx-5" />
         {
           comments.map((comment) =>
             <ShowComments
@@ -83,20 +80,20 @@ function Comments(props) {
               userComment={userComments[comment.user_id]}
             />)
         }
-        <hr class="mx-5" />
-        <div class="max-w-2xl mx-auto">
+        <hr className="mx-5" />
+        <div className="max-w-2xl mx-auto">
 
-          <label for="chat" class="sr-only">Your message</label>
-          <div class="flex items-center py-2 px-3 rounded-lg">
-            <textarea id="chat" rows="1" class="block mx-4 p-2.5 w-full text-sm bg-white rounded-lg border border-gray-300" placeholder="Your message..." onChange={(e) => changeText(e)}></textarea>
-            <button type="submit" class="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-gray-600" onClick={postComment}>
-              <svg class="w-6 h-6 rotate-90" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path></svg>
+          <label for="chat" className="sr-only">Your message</label>
+          <div className="flex items-center py-2 px-3 rounded-lg">
+            <textarea id="chat" rows="1" className="block mx-4 p-2.5 w-full text-sm bg-white rounded-lg border border-gray-300" placeholder="Your message..." onChange={(e) => changeText(e)}></textarea>
+            <button type="submit" className="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-gray-600" onClick={postComment}>
+              <svg className="w-6 h-6 rotate-90" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path></svg>
             </button>
           </div>
         </div>
-        <div class="text-sm mx-4 mt-2 mb-4">
+        <div className="text-sm mx-4 mt-2 mb-4">
 
-          {/* <span class="font-semibold"></span> */}
+          {/* <span className="font-semibold"></span> */}
         </div>
       </>
     );
@@ -108,9 +105,9 @@ function ShowComments(props) {
   const userComment = props.userComment;
 
   return (
-    <div class="text-sm mx-4 mt-2 mb-4">
+    <div className="text-sm mx-4 mt-2 mb-4">
       <button onClick={() => window.location.href = './profile?user_id=' + userComment.id}>
-        <span class="font-semibold">{userComment.username}</span>
+        <span className="font-semibold">{userComment.username}</span>
       </button> {comment.text}
     </div>
   );
@@ -136,35 +133,35 @@ const Publi = ({
   userAvatar
 }) => (
 
-  <div class="bg-gray-100 p-4 grid place-items-center">
-    <div class="bg-white border rounded-sm max-w-md">
+  <div className="bg-gray-100 p-4 grid place-items-center">
+    <div className="bg-white border rounded-sm max-w-md">
       <button onClick={() => window.location.href = './profile?user_id=' + user.id}>
-        <div class="flex items-center px-4 py-3">
-          <img class="h-8 w-8 rounded-full" src={userAvatar} />
-          <div class="ml-3 ">
-            <span class="text-sm font-semibold antialiased block leading-tight">{user.username}</span>
+        <div className="flex items-center px-4 py-3">
+          <img className="h-8 w-8 rounded-full" src={userAvatar} />
+          <div className="ml-3 ">
+            <span className="text-sm font-semibold antialiased block leading-tight">{user.username}</span>
           </div>
         </div>
       </button>
       <img src={image} />
-      <div class="flex items-center justify-between mx-4 mt-3 mb-2">
-        <div class="flex gap-5">
+      <div className="flex items-center justify-between mx-4 mt-3 mb-2">
+        <div className="flex gap-5">
           <MgButton meGusta={meGusta} publi_id={publi.id}></MgButton>
           {/* <button onClick={darQuitarMeGusta(meGusta)}><MeGustaCorazon meGusta={meGusta}/></button> */}
           <button onClick={changeMostrar}>
-            <svg fill="#262626" height="24" viewBox="0 0 48 48" width="24"><path clip-rule="evenodd" d="M47.5 46.1l-2.8-11c1.8-3.3 2.8-7.1 2.8-11.1C47.5 11 37 .5 24 .5S.5 11 .5 24 11 47.5 24 47.5c4 0 7.8-1 11.1-2.8l11 2.8c.8.2 1.6-.6 1.4-1.4zm-3-22.1c0 4-1 7-2.6 10-.2.4-.3.9-.2 1.4l2.1 8.4-8.3-2.1c-.5-.1-1-.1-1.4.2-1.8 1-5.2 2.6-10 2.6-11.4 0-20.6-9.2-20.6-20.5S12.7 3.5 24 3.5 44.5 12.7 44.5 24z" fill-rule="evenodd"></path></svg>
+            <svg fill="#262626" height="24" viewBox="0 0 48 48" width="24"><path clipRule="evenodd" d="M47.5 46.1l-2.8-11c1.8-3.3 2.8-7.1 2.8-11.1C47.5 11 37 .5 24 .5S.5 11 .5 24 11 47.5 24 47.5c4 0 7.8-1 11.1-2.8l11 2.8c.8.2 1.6-.6 1.4-1.4zm-3-22.1c0 4-1 7-2.6 10-.2.4-.3.9-.2 1.4l2.1 8.4-8.3-2.1c-.5-.1-1-.1-1.4.2-1.8 1-5.2 2.6-10 2.6-11.4 0-20.6-9.2-20.6-20.5S12.7 3.5 24 3.5 44.5 12.7 44.5 24z" fillRule="evenodd"></path></svg>
           </button>
 
           <svg fill="#262626" height="24" viewBox="0 0 48 48" width="24"><path d="M47.8 3.8c-.3-.5-.8-.8-1.3-.8h-45C.9 3.1.3 3.5.1 4S0 5.2.4 5.7l15.9 15.6 5.5 22.6c.1.6.6 1 1.2 1.1h.2c.5 0 1-.3 1.3-.7l23.2-39c.4-.4.4-1 .1-1.5zM5.2 6.1h35.5L18 18.7 5.2 6.1zm18.7 33.6l-4.4-18.4L42.4 8.6 23.9 39.7z"></path></svg>
         </div>
-        <div class="flex">
+        <div className="flex">
           <svg fill="#262626" height="24" viewBox="0 0 48 48" width="24"><path d="M43.5 48c-.4 0-.8-.2-1.1-.4L24 29 5.6 47.6c-.4.4-1.1.6-1.6.3-.6-.2-1-.8-1-1.4v-45C3 .7 3.7 0 4.5 0h39c.8 0 1.5.7 1.5 1.5v45c0 .6-.4 1.2-.9 1.4-.2.1-.4.1-.6.1zM24 26c.8 0 1.6.3 2.2.9l15.8 16V3H6v39.9l15.8-16c.6-.6 1.4-.9 2.2-.9z"></path></svg>
         </div>
       </div>
-      <div class="font-semibold text-sm mx-4 mt-2 mb-4">{likes} likes</div>
-      <div class="text-sm mx-4 mt-2 mb-4">
+      <div className="font-semibold text-sm mx-4 mt-2 mb-4">{likes} likes</div>
+      <div className="text-sm mx-4 mt-2 mb-4">
         <button onClick={() => window.location.href = './profile?user_id=' + user.id}>
-          <span class="font-semibold">{user.username}</span>
+          <span className="font-semibold">{user.username}</span>
         </button> {publi.description}
       </div>
       <Comments comments={comments} userComments={userComments} mostrar={mostrar} publicationId={publi.id} ></Comments>

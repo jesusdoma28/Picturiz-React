@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Nav from './Utilidades/Nav';
-import { getUserInfo, getUserAuthId, getUserPublicationsAndImages, getUserFollowers, getUserFollowed, getAvatarByUserId, getFollow } from '../Service/Services';
+import { getUserInfo, getUserAuthId, getUserPublicationsAndImages, getUserFollowers, getUserFollowed, getAvatarByUserId, getFollow, getUserAuthRole } from '../Service/Services';
 import UserInfoProfile from './Utilidades/UserInfoProfile';
 
 export default class Profile extends Component {
@@ -17,6 +17,7 @@ export default class Profile extends Component {
             followed: [],
             userPublicationsImages: [],
             follow: false,
+            userAuthRole: '',
             cargando: true
         };
     }
@@ -25,7 +26,7 @@ export default class Profile extends Component {
         console.log('mounted')
         const userAuthId = await getUserAuthId();
         const userAvatar = await getAvatarByUserId(userAuthId);
-        
+        const userAuthRole = await getUserAuthRole();
 
         var queryString = window.location.search;
         var urlParams = new URLSearchParams(queryString);
@@ -53,14 +54,11 @@ export default class Profile extends Component {
         console.log(follow);
 
 
-        this.setState({ userInfo: userInfo, userAvatar: userAvatar, userAuthId: userAuthId, user_id: user_id, cargando: false, publications: publicationsAndImages.publications, userPublicationsImages: publicationsAndImages.images, followers: followers.users, followed: followed.users, follow: follow, avatarProfile: avatarProfile })
+        this.setState({ userInfo: userInfo, userAvatar: userAvatar, userAuthId: userAuthId, user_id: user_id, cargando: false, publications: publicationsAndImages.publications, userPublicationsImages: publicationsAndImages.images, followers: followers.users, followed: followed.users, follow: follow, avatarProfile: avatarProfile, userAuthRole: userAuthRole })
     }
 
     async componentDidUpdate() {
         console.log('updated')
-
-        const userAuthId = await getUserAuthId();
-        const userAvatar = await getAvatarByUserId(userAuthId);
 
         var queryString = window.location.search;
         var urlParams = new URLSearchParams(queryString);
@@ -73,26 +71,22 @@ export default class Profile extends Component {
             user_id = user_idParam;
         }
         else {
-            user_id = userAuthId;
+            user_id = this.state.userAuthId;
         }
         //var authUserId = urlParams.get('user_id');
 
-        const userInfo = await getUserInfo(user_id);
         const publicationsAndImages = await getUserPublicationsAndImages(user_id);
         const followers = await getUserFollowers(user_id);
-        const followed = await getUserFollowed(user_id);
         const follow = await getFollow(user_id);
-        const avatarProfile = await getAvatarByUserId(user_id);
         console.log('follow bool:');
         console.log(follow);
 
 
-
-        this.setState({ userInfo: userInfo, userAvatar: userAvatar, userAuthId: userAuthId, user_id: user_id, publications: publicationsAndImages.publications, userPublicationsImages: publicationsAndImages.images, followers: followers.users, followed: followed.users, follow: follow, avatarProfile: avatarProfile })
+        this.setState({ publications: publicationsAndImages.publications, userPublicationsImages: publicationsAndImages.images, followers: followers.users, follow: follow })
     }
 
     render() {
-        const { cargando, userAvatar, userAuthId, userInfo, publications, userPublicationsImages, followers, followed, follow, avatarProfile } = this.state;
+        const { cargando, userAvatar, userAuthId, userInfo, publications, userPublicationsImages, followers, followed, follow, avatarProfile, userAuthRole } = this.state;
 
         /* console.log('userInfo:');
         console.log(userInfo); */
@@ -108,21 +102,19 @@ export default class Profile extends Component {
 
         if (cargando == true) {
             return (
-                <Nav userAvatar={userAvatar} userAuthId={userAuthId} />
+                <Nav userAvatar={userAvatar} userAuthId={userAuthId} userAuthRole={userAuthRole} />
             )
         }
         else {
             return (
                 <>
-                    <div class="bg-gray-100 h-full h-screen">
-                        <Nav userAvatar={userAvatar} userAuthId={userAuthId} />
+                    <div className="bg-gray-100 h-full h-screen">
+                        <Nav userAvatar={userAvatar} userAuthId={userAuthId} userAuthRole={userAuthRole} />
 
                         <UserInfoProfile user={userInfo} userAvatar={avatarProfile} publications={publications} numPost={publications.length} numFollowers={followers.length} numFollowed={followed.length} userPublicationsImages={userPublicationsImages} userAuthId={userAuthId} follow={follow} ></UserInfoProfile>
                     </div>
                 </>
             )
         }
-
-
     }
 }
