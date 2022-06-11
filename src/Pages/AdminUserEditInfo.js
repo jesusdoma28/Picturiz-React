@@ -141,6 +141,7 @@ export default class AdminUserEditInfo extends Component {
         this.state = {
             userAuthId: '',
             userAvatar: '',
+            userProfileAvatar: null,
             user: null,
             form: {
                 name: '',
@@ -189,14 +190,15 @@ export default class AdminUserEditInfo extends Component {
             user_id = authUserId;
         }
 
-        const userAvatar = await getAvatarByUserId(user_id);
+        const userAvatar = await getAvatarByUserId(authUserId);
+        const userProfileAvatar = await getAvatarByUserId(user_id);
 
         const user = await getUserInfo(user_id);
         console.log('id:');
         console.log(user.id);
 
 
-        this.setState({ userAvatar: userAvatar, userAuthId: authUserId, user: user, userAuthRole: userAuthRole, cargando: false, form: { last_name: user.last_name } })
+        this.setState({ userAvatar: userAvatar, userAuthId: authUserId, user: user, userAuthRole: userAuthRole, userProfileAvatar: userProfileAvatar, cargando: false, form: { last_name: user.last_name } })
     }
 
     async componentDidUpdate() {
@@ -222,14 +224,14 @@ export default class AdminUserEditInfo extends Component {
             user_id = authUserId;
         }
 
-        const userAvatar = await getAvatarByUserId(user_id);
+        const userProfileAvatar = await getAvatarByUserId(user_id);
 
         const user = await getUserInfo(user_id);
         console.log('id:');
         console.log(user.id);
 
 
-        this.setState({ userAvatar: userAvatar, userAuthId: authUserId, user: user, userAuthRole: userAuthRole })
+        this.setState({ userAuthId: authUserId, user: user, userAuthRole: userAuthRole, userProfileAvatar: userProfileAvatar })
     }
 
     handleChange = async e => {
@@ -271,7 +273,7 @@ export default class AdminUserEditInfo extends Component {
 
 
     render() {
-        const { cargando, userAvatar, userAuthId, user, userAuthRole } = this.state;
+        const { cargando, userAvatar, userAuthId, user, userAuthRole, userProfileAvatar } = this.state;
 
         if (cargando == true) {
             return (
@@ -301,7 +303,7 @@ export default class AdminUserEditInfo extends Component {
                                         <div className="bg-white p-5 border-[1px] -mt-5 border-slate-200 rounded-md flex flex-col items-center space-y-2">
                                             <div className="w-24 h-24 relative mb-4">
                                                 <div className="group w-full h-full rounded-full overflow-hidden shadow-inner text-center bg-purple table">
-                                                    <img src={userAvatar} alt="avatar" className="object-cover object-center w-full h-full visible" />
+                                                    <img src={userProfileAvatar} alt="avatar" className="object-cover object-center w-full h-full visible" />
                                                 </div>
                                             </div>
                                             <div className="flex flex-col mb-40 bg-blue-400 rounded">

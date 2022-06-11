@@ -172,7 +172,7 @@ export default class AdminUsers extends React.PureComponent {
 
                     <div className="flex justify-center p-10 grid place-items-center">
                         <div className='mx-auto'>
-                            <button class="flex bg-blue-500 text-white font-bold py-2 px-4 rounded" onClick={() => window.location.href = './addNewUser'}>
+                            <button className="flex bg-blue-500 text-white font-bold py-2 px-4 rounded" onClick={() => window.location.href = './addNewUser'}>
                                 Add New User <img className='ml-2' width='25' src="newUser.svg"></img>
                             </button>
                         </div>

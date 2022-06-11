@@ -80,6 +80,7 @@ export default class Profile extends Component {
         const publicationsAndImages = await getUserPublicationsAndImages(user_id);
         const followers = await getUserFollowers(user_id);
         const follow = await getFollow(user_id);
+        const userAvatar = await getAvatarByUserId(this.state.userAuthId);
         console.log('follow bool:');
         console.log(follow);
 
