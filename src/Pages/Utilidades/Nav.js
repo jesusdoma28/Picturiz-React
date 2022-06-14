@@ -63,15 +63,15 @@ const Nav = ({
                         </div>
                     </div>
                 </div> */}
-                <div className="flex items-center lg:hidden">
-                    {/* <!-- Mobile menu button --> */}
+                {/* <div className="flex items-center lg:hidden">
+                     <!-- Mobile menu button --> 
                     <button
                         className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
                         aria-label="Main menu"
                         aria-expanded="false"
                     >
-                        {/* <!-- Icon when menu is closed. -->
-      <!-- Menu open: "hidden", Menu closed: "block" --> */}
+                         <!-- Icon when menu is closed. -->
+      <!-- Menu open: "hidden", Menu closed: "block" --> 
                         <svg className="block h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                             <path
                                 strokeLinecap="round"
@@ -80,8 +80,8 @@ const Nav = ({
                                 d="M4 6h16M4 12h16M4 18h16"
                             />
                         </svg>
-                        {/*  <!-- Icon when menu is open. -->
-      <!-- Menu open: "block", Menu closed: "hidden" --> */}
+                          <!-- Icon when menu is open. -->
+      <!-- Menu open: "block", Menu closed: "hidden" --> 
                         <svg className="hidden h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                             <path
                                 strokeLinecap="round"
@@ -91,10 +91,10 @@ const Nav = ({
                             />
                         </svg>
                     </button>
-                </div>
+                </div> */}
                 {/* <!-- icons--> */}
 
-                <div className="lg:ml-4 lg:flex lg:items-center">
+                <div className="ml-4 flex items-center">
                     <AdminButton userAuthRole={userAuthRole}></AdminButton>
                     <button
                         className="flex-shrink-0 p-1 border-transparent text-gray-700 rounded-full hover:text-gray-600 focus:outline-none focus:text-gray-600 transition duration-150 ease-in-out"

@@ -85,7 +85,6 @@ export default class Login extends Component {
                         <div className="flex flex-col bg-blue-400 rounded">
                             <label htmlFor='password' className='font-bold'>Password</label>
                             <input className="p-3 border-[1px] border-slate-500 rounded-sm w-80" placeholder="Password" id='password' onChange={this.handleChange} />
-                            <p className="font-bold text-[#0070ba] bg-white">Forgot password?</p>
                         </div>
                         <div className="flex flex-col space-y-5 w-full">
                             <button className="w-full bg-[#0070ba] rounded-3xl p-3 text-white font-bold transition duration-200 hover:bg-[#003087]" onClick={() => this.login()}>Log in</button>
