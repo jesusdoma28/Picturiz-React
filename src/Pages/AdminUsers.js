@@ -12,7 +12,7 @@ function Buttons(props) {
     }
     return (
         <>
-            <button onClick={borrar}><img width='25' src='trash.svg'></img></button>
+            <button onClick={borrar} className='mr-2'><img width='25' src='trash.svg'></img></button>
             <button onClick={() => window.location.href = './userEditInfo?user_id=' + user_id}><img width='25' src="edit.svg"></img></button>
         </>
     )
