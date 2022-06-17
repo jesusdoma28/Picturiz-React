@@ -5,6 +5,27 @@ import { getUserAuthId, getAvatarByUserId, getResultSearch, getUserAuthRole } fr
 import { PropagateLoader } from 'react-spinners';
 import { override } from '../Service/Constantes';
 
+function Progress(props) {
+    const mostrar = props.show;
+
+    if (mostrar == true) {
+        return (
+            <>
+                <div className="flex">
+                    <div className="alert flex flex-row items-center rounded">
+                        <div className="max-w-lg bg-blue-200 mx-auto p-2">
+                            <div className="flex space-x-2">
+                                <svg className="w-6 h-6 stroke-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                                <p className="text-blue-900 font-semibold">Searching...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </>
+        )
+    }
+}
+
 function MostrarResultatos(props) {
     const resultUsers = props.resultUsers;
     const resultAvatars = props.resultAvatars;
@@ -56,7 +77,8 @@ export default class Search extends Component {
             resultFollow: [],
             clickBuscarBool: false,
             userAuthRole: '',
-            cargando: true
+            cargando: true,
+            searching: false
         };
     }
 
@@ -98,11 +120,12 @@ export default class Search extends Component {
 
     doSearch = async () => {
         if (this.state.searchVar != null && this.state.searchVar != 'null' && this.state.searchVar != '') {
+            this.setState({ searching: true })
             const resultSearch = await getResultSearch(this.state.searchVar);
 
             console.log('resultSearch:');
             console.log(resultSearch);
-            this.setState({ resultUsers: resultSearch.users, resultAvatars: resultSearch.avatars, resultFollow: resultSearch.authFollowList, clickBuscarBool: true });
+            this.setState({ resultUsers: resultSearch.users, resultAvatars: resultSearch.avatars, resultFollow: resultSearch.authFollowList, clickBuscarBool: true, searching: false });
         }
         else {
             alert('La barra de busqueda no puede estar vacia')
@@ -126,11 +149,12 @@ export default class Search extends Component {
         else {
             return (
                 <>
-                    <div className="bg-gray-100 h-full">
+                    <div className="bg-gray-100 h-screen">
                         <Nav userAvatar={userAvatar} userAuthId={userAuthId} userAuthRole={userAuthRole} />
                         <div className="flex justify-center p-10 grid place-items-center h-80">
+                            <Progress show={this.state.searching}></Progress>
                             <div className="max-w-2xl mx-auto">
-                                <label for="simple-search" className="sr-only">Search</label>
+                                <label htmlFor="simple-search" className="sr-only">Search</label>
                                 <div className="flex justify-center">
                                     <div className="relative w-full">
                                         <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">

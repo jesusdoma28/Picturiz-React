@@ -12,11 +12,11 @@ function App() {
             <img width="30" className="-mt-10" src="https://www.paypalobjects.com/images/shared/momgram@2x.png" />
           </div>
           <div className="flex flex-col mt-2 mb-40 bg-blue-400 rounded">
-            <label for='email' className='font-bold'>Email</label>
+            <label htmlFor='email' className='font-bold'>Email</label>
             <input className="p-3 border-[1px] border-slate-500 rounded-sm w-80" placeholder="E-Mail" id='email' />
           </div>
           <div className="flex flex-col bg-blue-400 rounded">
-            <label for='password' className='font-bold'>Password</label>
+            <label htmlFor='password' className='font-bold'>Password</label>
             <input className="p-3 border-[1px] border-slate-500 rounded-sm w-80" placeholder="Password" id='password' />
             <p className="font-bold text-[#0070ba] bg-white">Forgot password?</p>
           </div>

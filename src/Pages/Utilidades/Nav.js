@@ -43,7 +43,7 @@ const Nav = ({
                 </div>
                 {/* <div className="flex-1 flex items-center justify-center px-2 lg:ml-12">
                     <div className="max-w-lg w-full lg:max-w-xs">
-                        <label for="search" className="sr-only">Search</label>
+                        <label htmlFor="search" className="sr-only">Search</label>
                         <div className="relative">
                             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <svg className="h-5 w-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20">

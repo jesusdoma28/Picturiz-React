@@ -75,7 +75,7 @@ function Comments(props) {
         <hr className="mx-5" />
         {
           comments.map((comment) =>
-            <ShowComments
+            <ShowComments key={comment.id}
               comment={comment}
               userComment={userComments[comment.user_id]}
             />)
@@ -83,7 +83,7 @@ function Comments(props) {
         <hr className="mx-5" />
         <div className="max-w-2xl mx-auto">
 
-          <label for="chat" className="sr-only">Your message</label>
+          <label htmlFor="chat" className="sr-only">Your message</label>
           <div className="flex items-center py-2 px-3 rounded-lg">
             <textarea id="chat" rows="1" className="block mx-4 p-2.5 w-full text-sm bg-white rounded-lg border border-gray-300" placeholder="Your message..." onChange={(e) => changeText(e)}></textarea>
             <button type="submit" className="inline-flex justify-center p-2 text-blue-600 rounded-full cursor-pointer hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-gray-600" onClick={postComment}>

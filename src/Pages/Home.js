@@ -49,7 +49,7 @@ export default class Home extends React.PureComponent {
   }
 
   render() {
-    const { cargando, publis, likes, meGusta, users, images, userAvatar, comments, userComments, userAuthId, publisAvatar, userAuthRole } = this.state
+    const { cargando, publis, likes, meGusta, users, images, userAvatar, comments, userComments, userAuthId, publisAvatar, userAuthRole } = this.state;
     if (cargando == true) {
       return (
         <>
@@ -74,8 +74,7 @@ export default class Home extends React.PureComponent {
                   user={users[publi.user_id]}
                   image={images[publi.id]}
                   comments={comments[publi.id]}
-                  userComm
-                  ents={userComments[publi.id]}
+                  userComments={userComments[publi.id]}
                   userAvatar={publisAvatar[publi.id]}
                 />)
             }
