@@ -6,6 +6,7 @@ const cookies = new Cookies();
 
 async function doLogout() {
     const responseJson = await logout();
+    console.log(responseJson);
 
     if (responseJson.logout == true) {
         window.location.href = "./";

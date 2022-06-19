@@ -215,7 +215,7 @@ export default class UserEditInfo extends Component {
     }
 
     updateUserInfo = async () => {
-        this.setState({ updating: true });
+        this.setState({ updating: true, errors: [], updated: '', haveErrors: '' });
         const responseJson = await DoUpdate(this.state.form, this.state.user);
 
         console.log('errors:');
@@ -224,7 +224,7 @@ export default class UserEditInfo extends Component {
     }
 
     updateUserAvatar = async () => {
-        this.setState({ updating: true });
+        this.setState({ updating: true, errors: [], updatedImage: '', haveErrorsImage: '' });
         const responseJson = await UpdateAvatar(this.state.form.image);
         console.log('avatar:');
         console.log(responseJson);

@@ -253,7 +253,7 @@ export default class AdminUserEditInfo extends Component {
     }
 
     updateUserInfoById = async () => {
-        this.setState({ updating: true })
+        this.setState({ updating: true, errors: [], updated: '', haveErrors: '' })
         const responseJson = await updateUserById(this.state.form, this.state.user);
 
 
@@ -263,7 +263,7 @@ export default class AdminUserEditInfo extends Component {
     }
 
     updateUserAvatarByUserId = async () => {
-        this.setState({ updating: true })
+        this.setState({ updating: true, errors: [], updatedImage: '', haveErrorsImage: '' })
         const responseJson = await updateAvatarByUserId(this.state.form.image, this.state.user.id);
         console.log('avatar:');
         console.log(responseJson);
