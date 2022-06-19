@@ -14,7 +14,7 @@ function Progress(props) {
                     <div className="alert flex flex-row items-center rounded">
                         <div className="max-w-lg bg-blue-200 mx-auto p-2">
                             <div className="flex space-x-2">
-                                <svg className="w-6 h-6 stroke-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                                <svg className="w-6 h-6 stroke-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
                                 <p className="text-blue-900 font-semibold">Updating...</p>
                             </div>
                         </div>
@@ -159,9 +159,6 @@ export default class AdminUserEditInfo extends Component {
             updated: '',
             errors: [],
 
-            updatedImage: '',
-            haveErrorsImage: '',
-
             cargando: true,
             updating: false
         };
@@ -263,11 +260,11 @@ export default class AdminUserEditInfo extends Component {
     }
 
     updateUserAvatarByUserId = async () => {
-        this.setState({ updating: true, errors: [], updatedImage: '', haveErrorsImage: '' })
+        this.setState({ updating: true, errors: [], updated: '', haveErrors: '' })
         const responseJson = await updateAvatarByUserId(this.state.form.image, this.state.user.id);
         console.log('avatar:');
         console.log(responseJson);
-        this.setState({ updatedImage: responseJson.updatedImage, haveErrorsImage: responseJson.haveErrorsImage, updating: false })
+        this.setState({ updated: responseJson.updatedImage, haveErrors: responseJson.haveErrorsImage, updating: false })
     }
 
 
